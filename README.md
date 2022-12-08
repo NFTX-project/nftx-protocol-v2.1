@@ -6,6 +6,11 @@
 
 Create `.env` file by referencing `.env.sample`.
 
+Installing foundry:
+
+1. `curl -L https://foundry.paradigm.xyz | bash`
+2. `foundryup`
+
 ## Scripts
 
 1. Compile contracts and create their Typescript bindings.
