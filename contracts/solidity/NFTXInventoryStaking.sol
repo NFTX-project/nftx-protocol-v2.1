@@ -10,6 +10,7 @@ import "./proxy/Create2BeaconProxy.sol";
 import "./token/XTokenUpgradeable.sol";
 import "./interface/INFTXInventoryStaking.sol";
 import "./interface/INFTXVaultFactory.sol";
+import "./interface/ITimelockExcludeList.sol";
 
 // Author: 0xKiwi.
 
@@ -28,6 +29,9 @@ contract NFTXInventoryStaking is
     bytes internal constant beaconCode = type(Create2BeaconProxy).creationCode;
 
     INFTXVaultFactory public override nftxVaultFactory;
+
+    uint256 public inventoryLockTimeErc20;
+    ITimelockExcludeList public timelockExcludeList;
 
     event XTokenCreated(uint256 vaultId, address baseToken, address xToken);
     event Deposit(
@@ -64,6 +68,27 @@ contract NFTXInventoryStaking is
             "LPStaking: Not authorized"
         );
         _;
+    }
+
+    function setTimelockExcludeList(address addr) external onlyOwner {
+        timelockExcludeList = ITimelockExcludeList(addr);
+    }
+
+    function setInventoryLockTimeErc20(uint256 time) external onlyOwner {
+        require(time <= 14 days, "Lock too long");
+        inventoryLockTimeErc20 = time;
+    }
+
+    function isAddressTimelockExcluded(address addr, uint256 vaultId)
+        public
+        view
+        returns (bool)
+    {
+        if (address(timelockExcludeList) == address(0)) {
+            return false;
+        } else {
+            return timelockExcludeList.isExcluded(addr, vaultId);
+        }
     }
 
     function deployXTokenForVault(uint256 vaultId) public virtual override {
@@ -115,20 +140,18 @@ contract NFTXInventoryStaking is
     {
         onlyOwnerIfPaused(10);
 
+        uint256 timelockTime = isAddressTimelockExcluded(msg.sender, vaultId)
+            ? 0
+            : inventoryLockTimeErc20;
+
         (
             IERC20Upgradeable baseToken,
             XTokenUpgradeable xToken,
             uint256 xTokensMinted
-        ) = _timelockMintFor(vaultId, msg.sender, _amount, DEFAULT_LOCKTIME);
+        ) = _timelockMintFor(vaultId, msg.sender, _amount, timelockTime);
         // Lock the base token in the xtoken contract
         baseToken.safeTransferFrom(msg.sender, address(xToken), _amount);
-        emit Deposit(
-            vaultId,
-            _amount,
-            xTokensMinted,
-            DEFAULT_LOCKTIME,
-            msg.sender
-        );
+        emit Deposit(vaultId, _amount, xTokensMinted, timelockTime, msg.sender);
     }
 
     function timelockMintFor(
@@ -138,11 +161,14 @@ contract NFTXInventoryStaking is
         uint256 timelockLength
     ) external virtual override returns (uint256) {
         onlyOwnerIfPaused(10);
-        require(msg.sender == nftxVaultFactory.zapContract(), "Not a zap");
+        require(
+            msg.sender == nftxVaultFactory.zapContract(),
+            "Not staking zap"
+        );
         require(
             nftxVaultFactory.excludedFromFees(msg.sender),
             "Not fee excluded"
-        );
+        ); // important for math that staking zap is excluded from fees
 
         (, , uint256 xTokensMinted) = _timelockMintFor(
             vaultId,
