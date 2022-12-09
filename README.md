@@ -33,3 +33,16 @@ Installing foundry:
 5. Verify deployed contracts on Etherscan
 
    `pnpm verify:goerli`
+
+## Info
+
+Contracts should be deployed in the following order:
+
+1. StakingTokenProvider
+2. NFTXLPStaking
+3. NFTXSimpleFeeDistributor
+4. NFTXVaultFactoryUpgradeable
+5. NFTXInventoryStaking
+6. NFTXEligibilityManager
+7. MultiProxyController
+8. NFTXStakingZap, NFTXUnstakingInventoryZap, TimelockExcludeList, NFTXMarketplaceZap
