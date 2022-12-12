@@ -10,6 +10,8 @@ interface INFTXVaultFactory is IBeacon {
 
     function zapContract() external view returns (address);
 
+    function zapContracts(address addr) external view returns (bool);
+
     function feeDistributor() external view returns (address);
 
     function eligibilityManager() external view returns (address);
@@ -50,6 +52,7 @@ interface INFTXVaultFactory is IBeacon {
 
     event NewFeeDistributor(address oldDistributor, address newDistributor);
     event NewZapContract(address oldZap, address newZap);
+    event UpdatedZapContract(address zap, bool excluded);
     event FeeExclusion(address feeExcluded, bool excluded);
     event NewEligibilityManager(address oldEligManager, address newEligManager);
     event NewVault(
@@ -92,7 +95,7 @@ interface INFTXVaultFactory is IBeacon {
 
     function setEligibilityManager(address _eligibilityManager) external;
 
-    function setZapContract(address _zapContract) external;
+    function setZapContract(address _zapContract, bool _excluded) external;
 
     function setFeeExclusion(address _excludedAddr, bool excluded) external;
 

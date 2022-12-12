@@ -15,8 +15,10 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
     proxy: {
       proxyContract: "OpenZeppelinTransparentProxy",
       execute: {
-        methodName: "__NFTXEligibilityManager_init",
-        args: [],
+        init: {
+          methodName: "__NFTXEligibilityManager_init",
+          args: [],
+        },
       },
     },
     log: true,

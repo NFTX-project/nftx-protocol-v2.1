@@ -17,8 +17,10 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
     proxy: {
       proxyContract: "OpenZeppelinTransparentProxy",
       execute: {
-        methodName: "__NFTXLPStaking__init",
-        args: [StakingTokenProvider.address],
+        init: {
+          methodName: "__NFTXLPStaking__init",
+          args: [StakingTokenProvider.address],
+        },
       },
     },
     log: true,

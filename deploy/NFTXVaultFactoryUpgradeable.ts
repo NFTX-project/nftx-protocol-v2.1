@@ -26,11 +26,13 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
       proxy: {
         proxyContract: "OpenZeppelinTransparentProxy",
         execute: {
-          methodName: "__NFTXVaultFactory_init",
-          args: [
-            NFTXVaultUpgradeableImpl.address,
-            NFTXSimpleFeeDistributor.address,
-          ],
+          init: {
+            methodName: "__NFTXVaultFactory_init",
+            args: [
+              NFTXVaultUpgradeableImpl.address,
+              NFTXSimpleFeeDistributor.address,
+            ],
+          },
         },
       },
       log: true,

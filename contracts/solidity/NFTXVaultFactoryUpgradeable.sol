@@ -45,6 +45,9 @@ contract NFTXVaultFactoryUpgradeable is
     uint64 public override factoryRandomSwapFee;
     uint64 public override factoryTargetSwapFee;
 
+    // v1.0.3
+    mapping(address => bool) public override zapContracts;
+
     function __NFTXVaultFactory_init(
         address _vaultImpl,
         address _feeDistributor
@@ -168,14 +171,14 @@ contract NFTXVaultFactoryUpgradeable is
         feeDistributor = _feeDistributor;
     }
 
-    function setZapContract(address _zapContract)
+    function setZapContract(address _zapContract, bool _excluded)
         public
         virtual
         override
         onlyOwner
     {
-        emit NewZapContract(zapContract, _zapContract);
-        zapContract = _zapContract;
+        emit UpdatedZapContract(_zapContract, _excluded);
+        zapContracts[_zapContract] = _excluded;
     }
 
     function setFeeExclusion(address _excludedAddr, bool excluded)

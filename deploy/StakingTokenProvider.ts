@@ -15,12 +15,14 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
     proxy: {
       proxyContract: "OpenZeppelinTransparentProxy",
       execute: {
-        methodName: "__StakingTokenProvider_init",
-        args: [
-          config.uniLikeExchange,
-          config.defaultPairedtoken,
-          config.defaultPrefix,
-        ],
+        init: {
+          methodName: "__StakingTokenProvider_init",
+          args: [
+            config.uniLikeExchange,
+            config.defaultPairedtoken,
+            config.defaultPrefix,
+          ],
+        },
       },
     },
     log: true,

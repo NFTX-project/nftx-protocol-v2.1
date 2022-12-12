@@ -161,14 +161,11 @@ contract NFTXInventoryStaking is
         uint256 timelockLength
     ) external virtual override returns (uint256) {
         onlyOwnerIfPaused(10);
-        require(
-            msg.sender == nftxVaultFactory.zapContract(),
-            "Not staking zap"
-        );
+        require(nftxVaultFactory.zapContracts(msg.sender), "Not staking zap");
         require(
             nftxVaultFactory.excludedFromFees(msg.sender),
             "Not fee excluded"
-        ); // important for math that staking zap is excluded from fees
+        );
 
         (, , uint256 xTokensMinted) = _timelockMintFor(
             vaultId,
