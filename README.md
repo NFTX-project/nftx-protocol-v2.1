@@ -30,6 +30,9 @@ Installing foundry:
 
    `pnpm deploy:goerli`
 
+**Note:** To only run a single deploy file run: `pnpm deploy:goerli --tags <tag>`\
+Tags are defined in the deploy script at the end like: `func.tags = ["<tag>"]`
+
 5. Verify deployed contracts on Etherscan
 
    `pnpm verify:goerli`

@@ -30,6 +30,16 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
     },
     log: true,
   });
+
+  // add zaps to `zapContracts` mapping
+  const NFTXStakingZap = await deployments.get("NFTXStakingZap");
+  await execute(
+    "NFTXVaultFactoryUpgradeable",
+    { from: deployer },
+    "setZapContract",
+    NFTXStakingZap.address,
+    true
+  );
 };
 export default func;
 func.tags = ["1_AddZapContractsMapping"];
