@@ -75,7 +75,7 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
     true
   );
 
-  const NFTXVaultCreationZap = await deployments.get("VaultCreationZap");
+  const NFTXVaultCreationZap = await deployments.get("NFTXVaultCreationZap");
   await execute(
     "NFTXVaultFactoryUpgradeable",
     { from: deployer },
