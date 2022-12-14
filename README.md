@@ -30,8 +30,13 @@ Installing foundry:
 
    `pnpm deploy:goerli`
 
-**Note:** To only run a single deploy file run: `pnpm deploy:goerli --tags <tag>`\
+**Notes:**
+
+i. To only run a single deploy file run: `pnpm deploy:goerli --tags <tag>`\
 Tags are defined in the deploy script at the end like: `func.tags = ["<tag>"]`
+
+ii. By default deploy uses Legacy transactions which is not ideal. So specify the EIP-1559 gas params when calling like this:\
+`pnpm deploy:mainnet --tags <tag> --maxfee <inWei> --priorityfee <inWei>`
 
 5. Verify deployed contracts on Etherscan
 
