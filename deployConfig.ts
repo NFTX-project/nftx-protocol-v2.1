@@ -7,6 +7,7 @@ const config: {
     sushiRouter: string;
     WETH: string;
     swapTarget: string;
+    MultiProxyControllerOwner: string;
   };
 } = {
   goerli: {
@@ -17,6 +18,17 @@ const config: {
     sushiRouter: "0x1b02dA8Cb0d097eB8D57A175b88c7D8b47997506",
     WETH: "0xB4FBF271143F4FBf7B91A5ded31805e42b2208d6",
     swapTarget: "0xF91bB752490473B8342a3E964E855b9f9a2A668e",
+    MultiProxyControllerOwner: "0xDEA9196Dcdd2173D6E369c2AcC0faCc83fD9346a",
+  },
+  mainnet: {
+    uniLikeExchange: "0xC0AEe478e3658e2610c5F7A4A2E1777cE9e4f2Ac",
+    defaultPairedtoken: "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+    defaultPrefix: "x",
+    treasury: "0x40D73Df4F99bae688CE3C23a01022224FE16C7b2",
+    sushiRouter: "0xd9e1cE17f2641f24aE83637ab66a2cca9C378B9F",
+    WETH: "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+    swapTarget: "0xDef1C0ded9bec7F1a1670819833240f027b25EfF",
+    MultiProxyControllerOwner: "0xaA29881aAc939A025A3ab58024D7dd46200fB93D",
   },
 };
 

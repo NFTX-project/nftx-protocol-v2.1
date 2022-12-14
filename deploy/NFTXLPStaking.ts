@@ -12,20 +12,24 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
 
   const StakingTokenProvider = await deployments.get("StakingTokenProvider");
 
-  const NFTXLPStaking = await deploy("NFTXLPStaking", {
-    from: deployer,
-    proxy: {
-      proxyContract: "OpenZeppelinTransparentProxy",
-      execute: {
-        init: {
-          methodName: "__NFTXLPStaking__init",
-          args: [StakingTokenProvider.address],
+  try {
+    const NFTXLPStaking = await deploy("NFTXLPStaking", {
+      from: deployer,
+      proxy: {
+        viaAdminContract: "MultiProxyController",
+        owner: config.MultiProxyControllerOwner, // `owner` of the `adminContract`
+        proxyContract: "OpenZeppelinTransparentProxy",
+        execute: {
+          init: {
+            methodName: "__NFTXLPStaking__init",
+            args: [StakingTokenProvider.address],
+          },
         },
       },
-    },
-    log: true,
-  });
+      log: true,
+    });
+  } catch (e) {}
 };
 export default func;
 func.tags = ["NFTXLPStaking"];
-func.dependencies = ["StakingTokenProvider"];
+// func.dependencies = ["StakingTokenProvider"];
