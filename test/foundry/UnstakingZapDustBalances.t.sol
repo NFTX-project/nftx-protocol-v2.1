@@ -4,7 +4,8 @@ pragma solidity ^0.8.0;
 
 import 'forge-std/Test.sol';
 
-// import '../../../contracts/solidity/NFTXUnstakingInventoryZap.sol';
+import "../../contracts/solidity/util/SafeERC20.sol";
+import '../../contracts/solidity/NFTXUnstakingInventoryZap.sol';
 
 
 /**
@@ -25,17 +26,19 @@ import 'forge-std/Test.sol';
  */
 contract UnstakingZapDustBalances is Test {
 
-    /// Store our mainnet fork information
-    // uint mainnetFork;
-    // uint internal constant BLOCK_NUMBER = 16_189_167;
+    using SafeERC20 for IERC20;
 
-    // address internal constant AFFECTED_USER = 0x82cA345C167BDCAd56FbedC7cc85a488885BDAdc;
-    // uint internal constant VAULT_ID = 1;
-    // address internal constant VAULT_TOKEN = 0xfC0247CdAAbC166423915077b666FA3bB9d1ee4d;
-    // address payable internal constant UNSTAKING_ZAP = payable(0x51d660Ba5c218b2Cf33FBAcA5e3aBb8aEff3543B);
+    /// Store our mainnet fork information
+    uint mainnetFork;
+    uint internal constant BLOCK_NUMBER = 16_189_167;
+
+    address internal constant AFFECTED_USER = 0x82cA345C167BDCAd56FbedC7cc85a488885BDAdc;
+    uint internal constant VAULT_ID = 1;
+    address internal constant VAULT_TOKEN = 0xfC0247CdAAbC166423915077b666FA3bB9d1ee4d;
+    address internal constant VAULT_XTOKEN = 0x8217772e6FE703F18C5C08ea04aB962395F62Aa6;
+    address payable internal constant UNSTAKING_ZAP = payable(0x51d660Ba5c218b2Cf33FBAcA5e3aBb8aEff3543B);
 
     function setUp() public {
-        /*
         // Generate a mainnet fork
         mainnetFork = vm.createFork(vm.envString('MAINNET_RPC_URL'));
 
@@ -47,11 +50,16 @@ contract UnstakingZapDustBalances is Test {
 
         // Confirm that our block number has set successfully
         assertEq(block.number, BLOCK_NUMBER);
-        */
     }
 
     function test_CanTriggerIssue() public {
-        /*
+        // Confirm the expected balances held by target wallets
+        assertEq(IERC20(VAULT_TOKEN).balanceOf(AFFECTED_USER), 0);
+        assertEq(IERC20(VAULT_TOKEN).balanceOf(UNSTAKING_ZAP), 0);
+
+        assertEq(IERC20(VAULT_XTOKEN).balanceOf(AFFECTED_USER), 879535037719212456);
+        assertEq(IERC20(VAULT_XTOKEN).balanceOf(UNSTAKING_ZAP), 0);
+
         // Connect to our affect user to mock future calls as their wallet
         vm.startPrank(AFFECTED_USER);
 
@@ -60,7 +68,7 @@ contract UnstakingZapDustBalances is Test {
         (uint numNfts, bool shortByTinyAmount) = NFTXUnstakingInventoryZap(UNSTAKING_ZAP).maxNftsUsingXToken(
             VAULT_ID,
             AFFECTED_USER,
-            VAULT_TOKEN
+            VAULT_XTOKEN
         );
 
         assertEq(numNfts, 2);
@@ -74,7 +82,6 @@ contract UnstakingZapDustBalances is Test {
         );
 
         vm.stopPrank();
-        */
-    } 
+    }
 
 }
