@@ -22,3 +22,6 @@ build
 
 # tenderly
 tenderly.yaml
+
+# Misc
+.DS_STORE
