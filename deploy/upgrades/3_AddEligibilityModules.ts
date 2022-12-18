@@ -10,33 +10,27 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
   const { deployer } = await getNamedAccounts();
   const config = deployConfig[network.name];
 
-  // At time of writing (16-12-22) the `EligibilityManager:allModuleNames`` returns this order
-  eligibilityModules = [
-    'NFTXListEligibility'
-    'NFTXRangeEligibility',
-    'NFTXGen0Eligibility',
-    'NFTXENSMerkleEligibility',
+  // At time of writing (16-12-22) the `EligibilityManager:allModuleNames` returns this order
+  const eligibilityModules = [
+    "NFTXListEligibility",
+    "NFTXRangeEligibility",
+    "NFTXGen0KittyEligibility",
+    "NFTXENSMerkleEligibility",
   ];
 
   for (let i = 0; i < eligibilityModules.length; ++i) {
-    try {
-      const eligibilityModule = await deploy(eligibilityModules[i], {
-        from: deployer,
-        log: true,
-      });
-    } catch (e) {}
+    const eligibilityModule = await deploy(eligibilityModules[i], {
+      from: deployer,
+      log: true,
+    });
 
-    // upgrade with new implementation
-    const EligibilityManager = await deployments.get("NFTXEligibilityManager");
     await execute(
       "NFTXEligibilityManager",
       { from: deployer },
       "addModule",
-      eligibilityModule.address,
-      EligibilityManager.implementation
+      eligibilityModule.address
     );
   }
-
 };
 
 export default func;
