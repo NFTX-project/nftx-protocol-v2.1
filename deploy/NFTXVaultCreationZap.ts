@@ -29,6 +29,22 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
     ],
     log: true,
   });
+
+  // configure other contracts
+  await execute(
+    "NFTXVaultFactoryUpgradeable",
+    { from: deployer },
+    "setFeeExclusion",
+    NFTXVaultCreationZap.address,
+    true
+  );
+  await execute(
+    "NFTXVaultFactoryUpgradeable",
+    { from: deployer },
+    "setZapContract",
+    NFTXVaultCreationZap.address,
+    true
+  );
 };
 export default func;
 func.tags = ["NFTXVaultCreationZap"];
@@ -36,5 +52,5 @@ func.dependencies = [
   // "NFTXVaultFactoryUpgradeable",
   // "NFTXInventoryStaking",
   // "NFTXLPStaking",
-  "SushiHelper",
+  // "SushiHelper",
 ];

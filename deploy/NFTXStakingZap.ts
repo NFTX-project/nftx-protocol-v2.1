@@ -41,7 +41,8 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
     "NFTXVaultFactoryUpgradeable",
     { from: deployer },
     "setZapContract",
-    NFTXStakingZap.address
+    NFTXStakingZap.address,
+    true
   );
 };
 export default func;
