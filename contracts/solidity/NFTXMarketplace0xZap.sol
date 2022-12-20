@@ -561,12 +561,12 @@ contract NFTXMarketplace0xZap is Ownable, ReentrancyGuard, ERC721Holder, ERC1155
     emit DustReturned(remaining, dustBalance, recipient);
   }
 
-  function _transferAllWETH(address receiver) internal returns(uint256 amount) {
+  function _transferAllWETH(address recipient) internal returns(uint256 amount) {
     amount = WETH.balanceOf(address(this));
     if (amount > 0) {
       // Unwrap our WETH into ETH and transfer it to the recipient
       WETH.withdraw(amount);
-      (bool success, ) = payable(receiver).call{value: amount}("");
+      (bool success, ) = payable(recipient).call{value: amount}("");
       require(success, "Unable to send unwrapped WETH");
     }
   }
