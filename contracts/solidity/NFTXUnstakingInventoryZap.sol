@@ -57,18 +57,25 @@ contract NFTXUnstakingInventoryZap is Ownable, ReentrancyGuard {
         } else {
             uint256 shareValue = inventoryStaking.xTokenShareValue(vaultId);
             uint256 reqXTokens = ((numNfts * 10e17) * 10e17) / shareValue;
-            // check for rounding error
+
+            // Check for rounding error being 1 less that expected amount
             if ((reqXTokens * shareValue) / 10e17 < numNfts * 10e17) {
                 reqXTokens += 1;
             }
 
+            // If the user doesn't have enough xTokens then we just want to pull the
+            // balance of the user.
             if (xToken.balanceOf(msg.sender) < reqXTokens) {
                 xTokensToPull = xToken.balanceOf(msg.sender);
-            } else if (remainingPortionToUnstake == 0) {
+            }
+            // If we have a zero portion to unstake, then we need to pull all tokens
+            // that are required.
+            else if (remainingPortionToUnstake == 0) {
                 xTokensToPull = reqXTokens;
-            } else {
-                uint256 remainingXTokens = xToken.balanceOf(msg.sender) -
-                    reqXTokens;
+            }
+            // Otherwise, we do some math that I don't quite understand.
+            else {
+                uint256 remainingXTokens = xToken.balanceOf(msg.sender) - reqXTokens;
                 xTokensToPull =
                     reqXTokens +
                     ((remainingXTokens * remainingPortionToUnstake) / 10e17);
@@ -77,25 +84,42 @@ contract NFTXUnstakingInventoryZap is Ownable, ReentrancyGuard {
 
         // pull xTokens then unstake for vTokens
         xToken.safeTransferFrom(msg.sender, address(this), xTokensToPull);
-        if (
-            xToken.allowance(address(this), address(inventoryStaking)) <
-            xTokensToPull
-        ) {
+
+        // If our inventory staking contract has an allowance less that the amount we need
+        // to pull, then we need to approve additional tokens.
+        if (xToken.allowance(address(this), address(inventoryStaking)) < xTokensToPull) {
             xToken.approve(address(inventoryStaking), type(uint256).max);
         }
 
         uint256 initialVTokenBal = vToken.balanceOf(address(this));
 
+        // Burn our xTokens to pull in our vTokens
         inventoryStaking.withdraw(vaultId, xTokensToPull);
 
         uint256 missingVToken;
-        if (
-            vToken.balanceOf(address(this)) - initialVTokenBal < numNfts * 10e17
-        ) {
+
+        // If the amount of vTokens generated from our `inventoryStaking.withdraw` call
+        // is not sufficient to fulfill the claim on the specified number of NFTs, then
+        // we determine if we can claim some dust from the contract.
+        if (vToken.balanceOf(address(this)) - initialVTokenBal < numNfts * 10e17) {
+            // We can calculate the amount of vToken required by the contract to get
+            // it from the withdrawal amount to the amount required based on the number
+            // of NFTs.
             missingVToken =
                 (numNfts * 10e17) -
                 (vToken.balanceOf(address(this)) - initialVTokenBal);
+
+            /**
+             * (numNfts * 10e17) = 
+             * initialVTokenBal = 2
+             * vToken.balanceOf(address(this)) = 1000000000000000001
+             * 
+             * 1000000000000000000 - (1000000000000000001 - 2) = 1
+             */
         }
+
+        // This dust value has to be less that 100 to ensure we aren't just being rinsed
+        // of dust.
         require(missingVToken < 100, "not enough vTokens");
 
         if (missingVToken > initialVTokenBal) {
@@ -133,8 +157,11 @@ contract NFTXUnstakingInventoryZap is Ownable, ReentrancyGuard {
             );
         }
 
-        uint256 vTokenRemainder = vToken.balanceOf(address(this)) -
-            initialVTokenBal;
+        // WARNING: If the contract has less vToken that it started with then this could
+        // create an underflow error, right? This would mean that we would need a conditional
+        // to wrap around this to ensure that the vToken balance is greater than the
+        // `initialVTokenBal`.
+        uint256 vTokenRemainder = vToken.balanceOf(address(this)) - initialVTokenBal;
 
         // if vToken remainder more than dust then return to sender
         if (vTokenRemainder > 100) {
