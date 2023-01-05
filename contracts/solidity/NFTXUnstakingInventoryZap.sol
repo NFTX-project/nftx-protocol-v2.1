@@ -44,7 +44,7 @@ contract NFTXUnstakingInventoryZap is Ownable, ReentrancyGuard {
         uint256 numNfts,
         uint256 remainingPortionToUnstake // TODO: add what this param is for in comments
     ) public payable {
-        require(remainingPortionToUnstake <= 10e17); // TODO: replace with 1e18
+        require(remainingPortionToUnstake <= 1e18);
         address vTokenAddr = vaultFactory.vault(vaultId);
         address xTokenAddr = inventoryStaking.xTokenAddr(vTokenAddr);
         IERC20Upgradeable vToken = IERC20Upgradeable(vTokenAddr); // TODO: directly declare IERC20 above to save gas
@@ -52,14 +52,14 @@ contract NFTXUnstakingInventoryZap is Ownable, ReentrancyGuard {
 
         // calculate xTokensToPull to pull
         uint256 xTokensToPull;
-        if (remainingPortionToUnstake == 10e17) { // TODO: replace with 1e18
+        if (remainingPortionToUnstake == 1e18) {
             xTokensToPull = xToken.balanceOf(msg.sender);
         } else {
             uint256 shareValue = inventoryStaking.xTokenShareValue(vaultId);
-            uint256 reqXTokens = ((numNfts * 10e17) * 10e17) / shareValue; // TODO: replace with 1e18
+            uint256 reqXTokens = ((numNfts * 1e18) * 1e18) / shareValue;
 
             // Check for rounding error being 1 less that expected amount
-            if ((reqXTokens * shareValue) / 10e17 < numNfts * 10e17) { // TODO: replace with 1e18
+            if ((reqXTokens * shareValue) / 1e18 < numNfts * 1e18) {
                 reqXTokens += 1;
             }
 
@@ -78,7 +78,7 @@ contract NFTXUnstakingInventoryZap is Ownable, ReentrancyGuard {
                 uint256 remainingXTokens = xToken.balanceOf(msg.sender) - reqXTokens;
                 xTokensToPull =
                     reqXTokens +
-                    ((remainingXTokens * remainingPortionToUnstake) / 10e17);
+                    ((remainingXTokens * remainingPortionToUnstake) / 1e18);
             }
         }
 
@@ -101,16 +101,16 @@ contract NFTXUnstakingInventoryZap is Ownable, ReentrancyGuard {
         // If the amount of vTokens generated from our `inventoryStaking.withdraw` call
         // is not sufficient to fulfill the claim on the specified number of NFTs, then
         // we determine if we can claim some dust from the contract.
-        if (vToken.balanceOf(address(this)) - initialVTokenBal < numNfts * 10e17) { // TODO: replace with 1e18
+        if (vToken.balanceOf(address(this)) - initialVTokenBal < numNfts * 1e18) {
             // We can calculate the amount of vToken required by the contract to get
             // it from the withdrawal amount to the amount required based on the number
             // of NFTs.
             missingVToken =
-                (numNfts * 10e17) - // TODO: cache this value
+                (numNfts * 1e18) - // TODO: cache this value
                 (vToken.balanceOf(address(this)) - initialVTokenBal); // TODO: cache this value
 
             /**
-             * (numNfts * 10e17) = 1e18
+             * (numNfts * 1e18) = 1e18
              * initialVTokenBal = 2
              * vToken.balanceOf(address(this)) = 1000000000000000001
              * 
@@ -154,7 +154,7 @@ contract NFTXUnstakingInventoryZap is Ownable, ReentrancyGuard {
         // reedem NFTs with vTokens, if requested
         if (numNfts > 0) {
             // FIXME: approval to vTokenAddr is not required in order to call `redeemTo`
-            if (vToken.allowance(address(this), vTokenAddr) < numNfts * 10e17) {
+            if (vToken.allowance(address(this), vTokenAddr) < numNfts * 1e18) {
                 vToken.approve(vTokenAddr, type(uint256).max);
             }
             INFTXVault(vTokenAddr).redeemTo(
@@ -197,11 +197,11 @@ contract NFTXUnstakingInventoryZap is Ownable, ReentrancyGuard {
 
         uint256 xTokenBal = xToken.balanceOf(staker);
         uint256 shareValue = inventoryStaking.xTokenShareValue(vaultId);
-        uint256 vTokensA = (xTokenBal * shareValue) / 10e17;
-        uint256 vTokensB = ((xTokenBal * shareValue) / 10e17) + 99;
+        uint256 vTokensA = (xTokenBal * shareValue) / 1e18;
+        uint256 vTokensB = ((xTokenBal * shareValue) / 1e18) + 99;
 
-        uint256 vTokensIntA = vTokensA / 10e17;
-        uint256 vTokensIntB = vTokensB / 10e17;
+        uint256 vTokensIntA = vTokensA / 1e18;
+        uint256 vTokensIntB = vTokensB / 1e18;
 
         if (vTokensIntB > vTokensIntA) {
             if (

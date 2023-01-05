@@ -133,7 +133,7 @@ contract UnstakingZapDustBalances is Test {
             0  // remainingPortionToUnstake
         );
 
-        assertEq(IERC20(VAULT_ADDR).balanceOf(PUNK_HOLDER), amount * 10e17);
+        assertEq(IERC20(VAULT_ADDR).balanceOf(PUNK_HOLDER), amount * 1e18);
 
         vm.stopPrank();
     }
@@ -143,7 +143,7 @@ contract UnstakingZapDustBalances is Test {
          * This approach should remove the requirement for this:
          * ```
          * // check for rounding error
-         * if ((reqXTokens * shareValue) / 10e17 < numNfts * 10e17) {
+         * if ((reqXTokens * shareValue) / 1e18 < numNfts * 1e18) {
          *      reqXTokens += 1;
          * }
          * ```
