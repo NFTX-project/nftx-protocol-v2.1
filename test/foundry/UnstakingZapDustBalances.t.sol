@@ -4,13 +4,14 @@ pragma solidity ^0.8.0;
 
 import 'forge-std/Test.sol';
 
-import '../../contracts/solidity/testing/IERC20.sol';
-import {NFTXStakingZap} from '../../contracts/solidity/NFTXStakingZap.sol';
-import {NFTXUnstakingInventoryZap} from '../../contracts/solidity/NFTXUnstakingInventoryZap.sol';
-import {NFTXStakingZap} from '../../contracts/solidity/NFTXStakingZap.sol';
-import {XTokenUpgradeable} from '../../contracts/solidity/token/XTokenUpgradeable.sol';
+import '@src/testing/IERC20.sol';
+import '@src/token/IERC721Upgradeable.sol';
+import {NFTXStakingZap} from '@src/NFTXStakingZap.sol';
+import {NFTXUnstakingInventoryZap} from '@src/NFTXUnstakingInventoryZap.sol';
+import {NFTXStakingZap} from '@src/NFTXStakingZap.sol';
+import {XTokenUpgradeable} from '@src/token/XTokenUpgradeable.sol';
 
-import {INFTXVault} from '../../contracts/solidity/interface/INFTXVault.sol';
+import {INFTXVault} from '@src/interface/INFTXVault.sol';
 
 
 /**
@@ -50,6 +51,8 @@ contract UnstakingZapDustBalances is Test {
     address payable internal constant STAKING_ZAP = payable(0xdC774D5260ec66e5DD4627E1DD800Eff3911345C);
     address payable internal constant UNSTAKING_ZAP = payable(0x51d660Ba5c218b2Cf33FBAcA5e3aBb8aEff3543B);
 
+    NFTXUnstakingInventoryZap unstakingZap;
+
     constructor () {
         // Generate a mainnet fork
         mainnetFork = vm.createFork(vm.envString('MAINNET_RPC_URL'));
@@ -62,6 +65,11 @@ contract UnstakingZapDustBalances is Test {
 
         // Confirm that our block number has set successfully
         assertEq(block.number, BLOCK_NUMBER);
+
+        // set new code to the deployed zap address
+        unstakingZap = new NFTXUnstakingInventoryZap();
+        bytes memory code = address(unstakingZap).code;
+        vm.etch(UNSTAKING_ZAP, code);
     }
 
     /**
@@ -69,7 +77,9 @@ contract UnstakingZapDustBalances is Test {
      *
      * - Deploy the local Staking and Unstaking zap so we can modify
      */
-    function test_CanTriggerIssue(uint amount) public {
+    function test_noUnderflow() public {
+        uint256 amount = 1;
+
         uint[] memory tokenIds = new uint[](8);
         tokenIds[0] = 3;
         tokenIds[1] = 4;
@@ -127,13 +137,15 @@ contract UnstakingZapDustBalances is Test {
         // This will assert our updated calculation based on received xTokens
          determineBurnXTokenValue(xTokenBalance);
 
+         uint256 iniPunkBalance = IERC721Upgradeable(PUNK_TOKEN).balanceOf(PUNK_HOLDER);
+
         NFTXUnstakingInventoryZap(UNSTAKING_ZAP).unstakeInventory(
             VAULT_ID,
             amount,
             0  // remainingPortionToUnstake
         );
 
-        assertEq(IERC20(VAULT_ADDR).balanceOf(PUNK_HOLDER), amount * 1e18);
+        assertEq(IERC721Upgradeable(PUNK_TOKEN).balanceOf(PUNK_HOLDER) - iniPunkBalance, amount);
 
         vm.stopPrank();
     }
