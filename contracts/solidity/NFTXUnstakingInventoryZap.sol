@@ -206,7 +206,7 @@ contract NFTXUnstakingInventoryZap is Ownable, ReentrancyGuard {
         if (vTokensIntB > vTokensIntA) {
             if (
                 vToken.balanceOf(msg.sender) >= 99 &&
-                vToken.allowance(address(this), vTokenAddr) >= 99
+                vToken.allowance(msg.sender, address(this)) >= 99
             ) {
                 return (vTokensIntB, true);
             } else if (lpPair.totalSupply() >= 10000) {
