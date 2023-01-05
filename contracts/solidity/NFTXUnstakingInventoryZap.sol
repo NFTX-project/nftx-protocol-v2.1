@@ -122,6 +122,7 @@ contract NFTXUnstakingInventoryZap is Ownable, ReentrancyGuard {
         // of dust.
         require(missingVToken < 100, "not enough vTokens");
 
+        uint256 dustUsed;
         if (missingVToken > initialVTokenBal) {
             // If user has sufficient vTokens to account for missingVToken
             // then get it from them to this contract
@@ -135,8 +136,7 @@ contract NFTXUnstakingInventoryZap is Ownable, ReentrancyGuard {
                     missingVToken
                 );
             } else {
-                // else we swap ETH from this contract to some vTokens
-                // FIXME: extra vTokens that we get here shouldn't be sent to msg.sender as vTokenRemainder
+                // else we swap ETH from this contract  get missingVToken
                 address[] memory path = new address[](2);
                 path[0] = address(weth);
                 path[1] = vTokenAddr;
@@ -147,6 +147,8 @@ contract NFTXUnstakingInventoryZap is Ownable, ReentrancyGuard {
                     block.timestamp + 10000 // TODO: remove unnecessary 10000
                 );
             }
+        } else {
+            dustUsed = missingVToken;
         }
 
         // reedem NFTs with vTokens, if requested
@@ -162,11 +164,14 @@ contract NFTXUnstakingInventoryZap is Ownable, ReentrancyGuard {
             );
         }
 
-        // FIXME: WARNING: If the contract has less vToken that it started with then this could
-        // create an underflow error, right? This would mean that we would need a conditional
-        // to wrap around this to ensure that the vToken balance is greater than the
-        // `initialVTokenBal`.
-        uint256 vTokenRemainder = vToken.balanceOf(address(this)) - initialVTokenBal;
+        /**
+         * How this fixes underflow error:
+         * vToken.balanceOf(address(this)) = 1
+         * initialVTokenBal = 2
+         * dustUsed = missingVToken = 1
+         * vTokenRemainder = 1 - (2 - 1) = 0
+         */
+        uint256 vTokenRemainder = vToken.balanceOf(address(this)) - (initialVTokenBal - dustUsed);
 
         // if vToken remainder more than dust then return to sender
         if (vTokenRemainder > 100) {
