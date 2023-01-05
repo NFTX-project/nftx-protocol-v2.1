@@ -38,34 +38,34 @@ contract NFTXUnstakingInventoryZap is Ownable, ReentrancyGuard {
         sushiRouter = IUniswapV2Router01(sushiRouterAddr);
         weth = IWETH(sushiRouter.WETH());
     }
-
+    
     function unstakeInventory(
         uint256 vaultId,
         uint256 numNfts,
-        uint256 remainingPortionToUnstake
+        uint256 remainingPortionToUnstake // TODO: add what this param is for in comments
     ) public payable {
-        require(remainingPortionToUnstake <= 10e17);
+        require(remainingPortionToUnstake <= 10e17); // TODO: replace with 1e18
         address vTokenAddr = vaultFactory.vault(vaultId);
         address xTokenAddr = inventoryStaking.xTokenAddr(vTokenAddr);
-        IERC20Upgradeable vToken = IERC20Upgradeable(vTokenAddr);
+        IERC20Upgradeable vToken = IERC20Upgradeable(vTokenAddr); // TODO: directly declare IERC20 above to save gas
         IERC20Upgradeable xToken = IERC20Upgradeable(xTokenAddr);
 
         // calculate xTokensToPull to pull
         uint256 xTokensToPull;
-        if (remainingPortionToUnstake == 10e17) {
+        if (remainingPortionToUnstake == 10e17) { // TODO: replace with 1e18
             xTokensToPull = xToken.balanceOf(msg.sender);
         } else {
             uint256 shareValue = inventoryStaking.xTokenShareValue(vaultId);
-            uint256 reqXTokens = ((numNfts * 10e17) * 10e17) / shareValue;
+            uint256 reqXTokens = ((numNfts * 10e17) * 10e17) / shareValue; // TODO: replace with 1e18
 
             // Check for rounding error being 1 less that expected amount
-            if ((reqXTokens * shareValue) / 10e17 < numNfts * 10e17) {
+            if ((reqXTokens * shareValue) / 10e17 < numNfts * 10e17) { // TODO: replace with 1e18
                 reqXTokens += 1;
             }
 
             // If the user doesn't have enough xTokens then we just want to pull the
             // balance of the user.
-            if (xToken.balanceOf(msg.sender) < reqXTokens) {
+            if (xToken.balanceOf(msg.sender) < reqXTokens) { // TODO: cache xToken.balanceOf(msg.sender)
                 xTokensToPull = xToken.balanceOf(msg.sender);
             }
             // If we have a zero portion to unstake, then we need to pull all tokens
@@ -73,7 +73,7 @@ contract NFTXUnstakingInventoryZap is Ownable, ReentrancyGuard {
             else if (remainingPortionToUnstake == 0) {
                 xTokensToPull = reqXTokens;
             }
-            // Otherwise, we do some math that I don't quite understand.
+            // Otherwise, we do some math that I don't quite understand. // TODO: edit this comment lol
             else {
                 uint256 remainingXTokens = xToken.balanceOf(msg.sender) - reqXTokens;
                 xTokensToPull =
@@ -101,16 +101,16 @@ contract NFTXUnstakingInventoryZap is Ownable, ReentrancyGuard {
         // If the amount of vTokens generated from our `inventoryStaking.withdraw` call
         // is not sufficient to fulfill the claim on the specified number of NFTs, then
         // we determine if we can claim some dust from the contract.
-        if (vToken.balanceOf(address(this)) - initialVTokenBal < numNfts * 10e17) {
+        if (vToken.balanceOf(address(this)) - initialVTokenBal < numNfts * 10e17) { // TODO: replace with 1e18
             // We can calculate the amount of vToken required by the contract to get
             // it from the withdrawal amount to the amount required based on the number
             // of NFTs.
             missingVToken =
-                (numNfts * 10e17) -
-                (vToken.balanceOf(address(this)) - initialVTokenBal);
+                (numNfts * 10e17) - // TODO: cache this value
+                (vToken.balanceOf(address(this)) - initialVTokenBal); // TODO: cache this value
 
             /**
-             * (numNfts * 10e17) = 
+             * (numNfts * 10e17) = 1e18
              * initialVTokenBal = 2
              * vToken.balanceOf(address(this)) = 1000000000000000001
              * 
@@ -123,9 +123,11 @@ contract NFTXUnstakingInventoryZap is Ownable, ReentrancyGuard {
         require(missingVToken < 100, "not enough vTokens");
 
         if (missingVToken > initialVTokenBal) {
+            // If user has sufficient vTokens to account for missingVToken
+            // then get it from them to this contract
             if (
                 vToken.balanceOf(msg.sender) >= missingVToken &&
-                vToken.allowance(address(this), vTokenAddr) >= missingVToken
+                vToken.allowance(address(this), vTokenAddr) >= missingVToken // FIXME: should check allowance as: vToken.allowance(msg.sender, address(this))
             ) {
                 vToken.safeTransferFrom(
                     msg.sender,
@@ -133,20 +135,23 @@ contract NFTXUnstakingInventoryZap is Ownable, ReentrancyGuard {
                     missingVToken
                 );
             } else {
+                // else we swap ETH from this contract to some vTokens
+                // FIXME: extra vTokens that we get here shouldn't be sent to msg.sender as vTokenRemainder
                 address[] memory path = new address[](2);
                 path[0] = address(weth);
                 path[1] = vTokenAddr;
-                sushiRouter.swapETHForExactTokens{value: 1000000000}(
+                sushiRouter.swapETHForExactTokens{value: 1_000_000_000}(
                     missingVToken,
                     path,
                     address(this),
-                    block.timestamp + 10000
+                    block.timestamp + 10000 // TODO: remove unnecessary 10000
                 );
             }
         }
 
         // reedem NFTs with vTokens, if requested
         if (numNfts > 0) {
+            // FIXME: approval to vTokenAddr is not required in order to call `redeemTo`
             if (vToken.allowance(address(this), vTokenAddr) < numNfts * 10e17) {
                 vToken.approve(vTokenAddr, type(uint256).max);
             }
@@ -157,7 +162,7 @@ contract NFTXUnstakingInventoryZap is Ownable, ReentrancyGuard {
             );
         }
 
-        // WARNING: If the contract has less vToken that it started with then this could
+        // FIXME: WARNING: If the contract has less vToken that it started with then this could
         // create an underflow error, right? This would mean that we would need a conditional
         // to wrap around this to ensure that the vToken balance is greater than the
         // `initialVTokenBal`.
