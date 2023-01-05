@@ -38,7 +38,7 @@ contract NFTXUnstakingInventoryZap is Ownable, ReentrancyGuard {
         sushiRouter = IUniswapV2Router01(sushiRouterAddr);
         weth = IWETH(sushiRouter.WETH());
     }
-    
+
     /**
      * @param remainingPortionToUnstake Represents the ratio (in 1e18) of the remaining xTokens (left after claiming `numNfts`) balance of user to unstake
      * if remainingPortionToUnstake = 1e18 => unstake entire user's balance
@@ -50,8 +50,12 @@ contract NFTXUnstakingInventoryZap is Ownable, ReentrancyGuard {
         uint256 remainingPortionToUnstake
     ) public payable {
         require(remainingPortionToUnstake <= 1e18);
-        IERC20Upgradeable vToken = IERC20Upgradeable(vaultFactory.vault(vaultId));
-        IERC20Upgradeable xToken = IERC20Upgradeable(inventoryStaking.xTokenAddr(address(vToken)));
+        IERC20Upgradeable vToken = IERC20Upgradeable(
+            vaultFactory.vault(vaultId)
+        );
+        IERC20Upgradeable xToken = IERC20Upgradeable(
+            inventoryStaking.xTokenAddr(address(vToken))
+        );
 
         uint256 reqVTokens = numNfts * 1e18;
 
@@ -80,7 +84,8 @@ contract NFTXUnstakingInventoryZap is Ownable, ReentrancyGuard {
             }
             // Otherwise, calculate remaining xTokens to unstake using `remainingPortionToUnstake` ratio
             else {
-                uint256 remainingXTokens = xToken.balanceOf(msg.sender) - reqXTokens;
+                uint256 remainingXTokens = xToken.balanceOf(msg.sender) -
+                    reqXTokens;
                 xTokensToPull =
                     reqXTokens +
                     ((remainingXTokens * remainingPortionToUnstake) / 1e18);
@@ -92,14 +97,18 @@ contract NFTXUnstakingInventoryZap is Ownable, ReentrancyGuard {
 
         // If our inventory staking contract has an allowance less that the amount we need
         // to pull, then we need to approve additional tokens.
-        if (xToken.allowance(address(this), address(inventoryStaking)) < xTokensToPull) {
+        if (
+            xToken.allowance(address(this), address(inventoryStaking)) <
+            xTokensToPull
+        ) {
             xToken.approve(address(inventoryStaking), type(uint256).max);
         }
 
         uint256 initialVTokenBal = vToken.balanceOf(address(this));
         // Burn our xTokens to pull in our vTokens
         inventoryStaking.withdraw(vaultId, xTokensToPull);
-        uint256 vTokensReceived = vToken.balanceOf(address(this)) - initialVTokenBal;
+        uint256 vTokensReceived = vToken.balanceOf(address(this)) -
+            initialVTokenBal;
 
         uint256 missingVToken;
 
@@ -116,7 +125,7 @@ contract NFTXUnstakingInventoryZap is Ownable, ReentrancyGuard {
              * reqVTokens = 1e18
              * initialVTokenBal = 2
              * vToken.balanceOf(address(this)) = 1000000000000000001
-             * 
+             *
              * 1000000000000000000 - (1000000000000000001 - 2) = 1
              */
         }
@@ -170,7 +179,8 @@ contract NFTXUnstakingInventoryZap is Ownable, ReentrancyGuard {
          * dustUsed = missingVToken = 1
          * vTokenRemainder = 1 - (2 - 1) = 0
          */
-        uint256 vTokenRemainder = vToken.balanceOf(address(this)) - (initialVTokenBal - dustUsed);
+        uint256 vTokenRemainder = vToken.balanceOf(address(this)) -
+            (initialVTokenBal - dustUsed);
 
         // if vToken remainder more than dust then return to sender.
         // happens when `remainingPortionToUnstake` is non-zero
