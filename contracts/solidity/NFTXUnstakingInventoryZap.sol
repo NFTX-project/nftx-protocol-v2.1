@@ -39,44 +39,64 @@ contract NFTXUnstakingInventoryZap is Ownable, ReentrancyGuard {
         weth = IWETH(sushiRouter.WETH());
     }
 
+    /**
+     * @param remainingPortionToUnstake Represents the ratio (in 1e18) of the remaining xTokens (left after claiming `numNfts`) balance of user to unstake
+     * if remainingPortionToUnstake = 1e18 => unstake entire user's balance
+     * if remainingPortionToUnstake = 0 => only unstake required xToken balance to claim `numNfts`, nothing extra
+     */
     function unstakeInventory(
         uint256 vaultId,
         uint256 numNfts,
         uint256 remainingPortionToUnstake
     ) public payable {
-        require(remainingPortionToUnstake <= 10e17);
-        address vTokenAddr = vaultFactory.vault(vaultId);
-        address xTokenAddr = inventoryStaking.xTokenAddr(vTokenAddr);
-        IERC20Upgradeable vToken = IERC20Upgradeable(vTokenAddr);
-        IERC20Upgradeable xToken = IERC20Upgradeable(xTokenAddr);
+        require(remainingPortionToUnstake <= 1e18);
+        IERC20Upgradeable vToken = IERC20Upgradeable(
+            vaultFactory.vault(vaultId)
+        );
+        IERC20Upgradeable xToken = IERC20Upgradeable(
+            inventoryStaking.xTokenAddr(address(vToken))
+        );
 
-        // calculate xTokensToPull to pull
+        uint256 reqVTokens = numNfts * 1e18;
+
+        // calculate `xTokensToPull` to pull
         uint256 xTokensToPull;
-        if (remainingPortionToUnstake == 10e17) {
-            xTokensToPull = xToken.balanceOf(msg.sender);
+        uint256 xTokenUserBal = xToken.balanceOf(msg.sender);
+        if (remainingPortionToUnstake == 1e18) {
+            xTokensToPull = xTokenUserBal;
         } else {
-            uint256 shareValue = inventoryStaking.xTokenShareValue(vaultId);
-            uint256 reqXTokens = ((numNfts * 10e17) * 10e17) / shareValue;
-            // check for rounding error
-            if ((reqXTokens * shareValue) / 10e17 < numNfts * 10e17) {
+            uint256 shareValue = inventoryStaking.xTokenShareValue(vaultId); // vTokens per xToken in wei
+            uint256 reqXTokens = (reqVTokens * 1e18) / shareValue;
+
+            // Check for rounding error being 1 less that expected amount
+            if ((reqXTokens * shareValue) / 1e18 < reqVTokens) {
                 reqXTokens += 1;
             }
 
-            if (xToken.balanceOf(msg.sender) < reqXTokens) {
-                xTokensToPull = xToken.balanceOf(msg.sender);
-            } else if (remainingPortionToUnstake == 0) {
+            // If the user doesn't have enough xTokens then we just want to pull the
+            // balance of the user.
+            if (xTokenUserBal < reqXTokens) {
+                xTokensToPull = xTokenUserBal;
+            }
+            // If we have zero additional portion to unstake, then we only need to pull the required tokens
+            else if (remainingPortionToUnstake == 0) {
                 xTokensToPull = reqXTokens;
-            } else {
+            }
+            // Otherwise, calculate remaining xTokens to unstake using `remainingPortionToUnstake` ratio
+            else {
                 uint256 remainingXTokens = xToken.balanceOf(msg.sender) -
                     reqXTokens;
                 xTokensToPull =
                     reqXTokens +
-                    ((remainingXTokens * remainingPortionToUnstake) / 10e17);
+                    ((remainingXTokens * remainingPortionToUnstake) / 1e18);
             }
         }
 
         // pull xTokens then unstake for vTokens
         xToken.safeTransferFrom(msg.sender, address(this), xTokensToPull);
+
+        // If our inventory staking contract has an allowance less that the amount we need
+        // to pull, then we need to approve additional tokens.
         if (
             xToken.allowance(address(this), address(inventoryStaking)) <
             xTokensToPull
@@ -85,23 +105,42 @@ contract NFTXUnstakingInventoryZap is Ownable, ReentrancyGuard {
         }
 
         uint256 initialVTokenBal = vToken.balanceOf(address(this));
-
+        // Burn our xTokens to pull in our vTokens
         inventoryStaking.withdraw(vaultId, xTokensToPull);
+        uint256 vTokensReceived = vToken.balanceOf(address(this)) -
+            initialVTokenBal;
 
         uint256 missingVToken;
-        if (
-            vToken.balanceOf(address(this)) - initialVTokenBal < numNfts * 10e17
-        ) {
-            missingVToken =
-                (numNfts * 10e17) -
-                (vToken.balanceOf(address(this)) - initialVTokenBal);
+
+        // If the amount of vTokens generated from our `inventoryStaking.withdraw` call
+        // is not sufficient to fulfill the claim on the specified number of NFTs, then
+        // we determine if we can claim some dust from the contract.
+        if (vTokensReceived < reqVTokens) {
+            // We can calculate the amount of vToken required by the contract to get
+            // it from the withdrawal amount to the amount required based on the number
+            // of NFTs.
+            missingVToken = reqVTokens - vTokensReceived;
+
+            /**
+             * reqVTokens = 1e18
+             * initialVTokenBal = 2
+             * vToken.balanceOf(address(this)) = 1000000000000000001
+             *
+             * 1000000000000000000 - (1000000000000000001 - 2) = 1
+             */
         }
+
+        // This dust value has to be less that 100 to ensure we aren't just being rinsed
+        // of dust.
         require(missingVToken < 100, "not enough vTokens");
 
+        uint256 dustUsed;
         if (missingVToken > initialVTokenBal) {
+            // If user has sufficient vTokens to account for missingVToken
+            // then get it from them to this contract
             if (
                 vToken.balanceOf(msg.sender) >= missingVToken &&
-                vToken.allowance(address(this), vTokenAddr) >= missingVToken
+                vToken.allowance(msg.sender, address(this)) >= missingVToken
             ) {
                 vToken.safeTransferFrom(
                     msg.sender,
@@ -109,34 +148,42 @@ contract NFTXUnstakingInventoryZap is Ownable, ReentrancyGuard {
                     missingVToken
                 );
             } else {
+                // else we swap ETH from this contract to get `missingVToken`
                 address[] memory path = new address[](2);
                 path[0] = address(weth);
-                path[1] = vTokenAddr;
-                sushiRouter.swapETHForExactTokens{value: 1000000000}(
+                path[1] = address(vToken);
+                sushiRouter.swapETHForExactTokens{value: 1_000_000_000}(
                     missingVToken,
                     path,
                     address(this),
-                    block.timestamp + 10000
+                    block.timestamp
                 );
             }
+        } else {
+            dustUsed = missingVToken;
         }
 
         // reedem NFTs with vTokens, if requested
         if (numNfts > 0) {
-            if (vToken.allowance(address(this), vTokenAddr) < numNfts * 10e17) {
-                vToken.approve(vTokenAddr, type(uint256).max);
-            }
-            INFTXVault(vTokenAddr).redeemTo(
+            INFTXVault(address(vToken)).redeemTo(
                 numNfts,
                 new uint256[](0),
                 msg.sender
             );
         }
 
+        /**
+         * How this fixes underflow error:
+         * vToken.balanceOf(address(this)) = 1
+         * initialVTokenBal = 2
+         * dustUsed = missingVToken = 1
+         * vTokenRemainder = 1 - (2 - 1) = 0
+         */
         uint256 vTokenRemainder = vToken.balanceOf(address(this)) -
-            initialVTokenBal;
+            (initialVTokenBal - dustUsed);
 
-        // if vToken remainder more than dust then return to sender
+        // if vToken remainder more than dust then return to sender.
+        // happens when `remainingPortionToUnstake` is non-zero
         if (vTokenRemainder > 100) {
             vToken.safeTransfer(msg.sender, vTokenRemainder);
         }
@@ -160,16 +207,16 @@ contract NFTXUnstakingInventoryZap is Ownable, ReentrancyGuard {
 
         uint256 xTokenBal = xToken.balanceOf(staker);
         uint256 shareValue = inventoryStaking.xTokenShareValue(vaultId);
-        uint256 vTokensA = (xTokenBal * shareValue) / 10e17;
-        uint256 vTokensB = ((xTokenBal * shareValue) / 10e17) + 99;
+        uint256 vTokensA = (xTokenBal * shareValue) / 1e18;
+        uint256 vTokensB = ((xTokenBal * shareValue) / 1e18) + 99;
 
-        uint256 vTokensIntA = vTokensA / 10e17;
-        uint256 vTokensIntB = vTokensB / 10e17;
+        uint256 vTokensIntA = vTokensA / 1e18;
+        uint256 vTokensIntB = vTokensB / 1e18;
 
         if (vTokensIntB > vTokensIntA) {
             if (
                 vToken.balanceOf(msg.sender) >= 99 &&
-                vToken.allowance(address(this), vTokenAddr) >= 99
+                vToken.allowance(msg.sender, address(this)) >= 99
             ) {
                 return (vTokensIntB, true);
             } else if (lpPair.totalSupply() >= 10000) {
