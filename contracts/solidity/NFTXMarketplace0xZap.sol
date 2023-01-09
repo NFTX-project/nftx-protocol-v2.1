@@ -52,6 +52,7 @@ contract NFTXMarketplace0xZap is Ownable, ReentrancyGuard, ERC721Holder, ERC1155
 
   /// @notice An interface for the NFTX Vault Factory contract
   INFTXVaultFactory public immutable nftxFactory;
+  address public immutable feeDistributor;
 
   /// @notice A mapping of NFTX Vault IDs to their address corresponding vault contract address
   mapping(uint256 => address) public nftxVaultAddresses;
@@ -97,6 +98,7 @@ contract NFTXMarketplace0xZap is Ownable, ReentrancyGuard, ERC721Holder, ERC1155
     nftxFactory = INFTXVaultFactory(_nftxFactory);
     WETH = IWETH(_WETH);
     swapTarget = _swapTarget;
+    feeDistributor = INFTXVaultFactory(_nftxFactory).feeDistributor();
   }
 
 
@@ -133,8 +135,8 @@ contract NFTXMarketplace0xZap is Ownable, ReentrancyGuard, ERC721Holder, ERC1155
     // Emit our sale event
     emit Sell(ids.length, amount, to);
 
-    // Transfer dust back to the sender
-    _transferDust(msg.sender, vault, false);
+    // Transfer vault token dust to feeDistributor
+    _transferDust(vault, false);
   }
 
 
@@ -179,8 +181,8 @@ contract NFTXMarketplace0xZap is Ownable, ReentrancyGuard, ERC721Holder, ERC1155
     _swap721(vaultId, idsIn, specificIds, to);
     emit Swap(idsIn.length, amount, to);
 
-    // Transfer dust back to the sender
-    _transferDust(msg.sender, vault, true);
+    // Transfer dust ETH to sender and vault token dust to feeDistributor
+    _transferDust(vault, true);
   }
 
 
@@ -225,8 +227,8 @@ contract NFTXMarketplace0xZap is Ownable, ReentrancyGuard, ERC721Holder, ERC1155
     _redeem(vaultId, amount, specificIds, to);
     emit Buy(amount, quoteAmount, to);
 
-    // Transfer dust back to the sender
-    _transferDust(msg.sender, vault, true);
+    // Transfer dust ETH to sender and vault token dust to feeDistributor
+    _transferDust(vault, true);
   }
 
 
@@ -266,8 +268,8 @@ contract NFTXMarketplace0xZap is Ownable, ReentrancyGuard, ERC721Holder, ERC1155
     // Emit our sale event
     emit Sell(totalAmount, amount, to);
 
-    // Transfer dust back to the sender
-    _transferDust(msg.sender, vault, false);
+    // Transfer vault token dust to feeDistributor
+    _transferDust(vault, false);
   }
 
 
@@ -314,8 +316,8 @@ contract NFTXMarketplace0xZap is Ownable, ReentrancyGuard, ERC721Holder, ERC1155
     _swap1155(vaultId, idsIn, amounts, specificIds, to);
     emit Swap(totalAmount, amount, to);
 
-    // Transfer dust back to the sender
-    _transferDust(msg.sender, vault, true);
+    // Transfer dust ETH to sender and vault token dust to feeDistributor
+    _transferDust(vault, true);
   }
 
 
@@ -540,25 +542,24 @@ contract NFTXMarketplace0xZap is Ownable, ReentrancyGuard, ERC721Holder, ERC1155
 
 
   /**
-   * @notice Transfers remaining ETH and vault token dust to a recipient.
+   * @notice Transfers remaining ETH to msg.sender and vault token dust to feeDistributor.
    * 
-   * @param recipient Address of the dust recipient
    * @param vault Address of the vault token
    * @param isWETHDust Checks and transfers WETH dust if boolean is true
    */
 
-  function _transferDust(address recipient, address vault, bool isWETHDust) internal {
+  function _transferDust(address vault, bool isWETHDust) internal {
     uint256 remaining;
     if(isWETHDust) {
-      remaining = _transferAllWETH(recipient);
+      remaining = _transferAllWETH(msg.sender);
     }
 
     uint dustBalance = IERC20(vault).balanceOf(address(this));
     if (dustBalance > 0) {
-      IERC20(vault).transfer(recipient, dustBalance);
+      IERC20(vault).transfer(feeDistributor, dustBalance);
     }
 
-    emit DustReturned(remaining, dustBalance, recipient);
+    emit DustReturned(remaining, dustBalance, msg.sender);
   }
 
   function _transferAllWETH(address recipient) internal returns(uint256 amount) {
