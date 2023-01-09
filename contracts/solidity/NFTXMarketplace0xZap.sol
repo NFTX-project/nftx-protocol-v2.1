@@ -13,11 +13,6 @@ import "./util/SafeERC20.sol";
 
 
 /**
- * @notice A partial ERC20 interface.
- */
-
-
-/**
  * @notice A partial WETH interface.
  */
 
