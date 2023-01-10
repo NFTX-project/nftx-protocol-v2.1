@@ -16,7 +16,12 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
 
   const NFTXMarketplace0xZap = await deploy("NFTXMarketplace0xZap", {
     from: deployer,
-    args: [NFTXVaultFactoryUpgradeable.address, config.WETH, config.swapTarget],
+    args: [
+      NFTXVaultFactoryUpgradeable.address,
+      config.WETH,
+      config.swapTarget,
+      utils.parseUnits("1", "gwei"),
+    ],
     log: true,
   });
 };
