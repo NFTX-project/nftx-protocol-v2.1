@@ -556,12 +556,15 @@ contract NFTXMarketplace0xZap is Ownable, ReentrancyGuard, ERC721Holder, ERC1155
 
     uint256 dustBalance = IERC20(vault).balanceOf(address(this));
     address dustRecipient;
-    if (dustBalance > dustThreshold) {
-      dustRecipient = msg.sender;
-    } else if (dustBalance > 0) {
-      dustRecipient = feeDistributor;
+    if(dustBalance > 0) {
+      if (dustBalance > dustThreshold) {
+        dustRecipient = msg.sender;
+      } else {
+        dustRecipient = feeDistributor;
+      }
+
+      IERC20(vault).transfer(dustRecipient, dustBalance);
     }
-    IERC20(vault).transfer(dustRecipient, dustBalance);
 
     emit DustReturned(remaining, dustBalance, dustRecipient);
   }
