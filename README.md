@@ -42,6 +42,8 @@ ii. By default deploy uses Legacy transactions which is not ideal. So specify th
 
    `pnpm verify:goerli`
 
+Note: If getting "Invalid API Key" error for arbiscan, etc. Execute like this: `source .env && pnpm verify:arbitrum --api-key $ARBISCAN_API_KEY`
+
 ## Info
 
 Contracts should be deployed in the following order:

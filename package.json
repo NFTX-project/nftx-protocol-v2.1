@@ -12,6 +12,8 @@
     "verify:goerli": "hardhat --network goerli etherscan-verify",
     "deploy:mainnet": "hardhat deploy --network mainnet",
     "verify:mainnet": "hardhat --network mainnet etherscan-verify",
+    "deploy:arbitrum": "hardhat deploy --network arbitrum",
+    "verify:arbitrum": "hardhat --network arbitrum etherscan-verify",
     "unflatten": "npx @devdavi/unflatten"
   },
   "devDependencies": {
