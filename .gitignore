@@ -15,6 +15,7 @@ deployments/localhost
 # Foundry
 forge-cache
 out
+broadcast
 
 # Graph protocol
 generated

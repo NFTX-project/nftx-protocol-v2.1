@@ -1,0 +1,1 @@
+source .env && forge script ./script/arbiTransferOwnership.s.sol --broadcast --rpc-url $ARBITRUM_RPC_URL --sender $SENDER --private-key $DEPLOYER_PRIVATE_KEY
