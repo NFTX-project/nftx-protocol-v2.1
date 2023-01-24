@@ -41,20 +41,20 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
     "NFTXVaultFactoryUpgradeable"
   );
   const NFTXInventoryStaking = await deployments.get("NFTXInventoryStaking");
-  await execute(
-    "MultiProxyController",
-    { from: deployer },
-    "upgradeProxyTo",
-    0,
-    NFTXVaultFactoryUpgradeable.implementation
-  );
-  await execute(
-    "MultiProxyController",
-    { from: deployer },
-    "upgradeProxyTo",
-    5,
-    NFTXInventoryStaking.implementation
-  );
+  // await execute(
+  //   "MultiProxyController",
+  //   { from: deployer },
+  //   "upgradeProxyTo",
+  //   0,
+  //   NFTXVaultFactoryUpgradeable.implementation //FIXME: .implementation returns old value as the above try-catch reverts
+  // );
+  // await execute(
+  //   "MultiProxyController",
+  //   { from: deployer },
+  //   "upgradeProxyTo",
+  //   5,
+  //   NFTXInventoryStaking.implementation //FIXME: .implementation returns old value as the above try-catch reverts
+  // );
 
   // add zaps to `zapContracts` mapping
   const NFTXStakingZap = await deployments.get("NFTXStakingZap");
