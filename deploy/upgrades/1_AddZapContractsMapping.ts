@@ -22,6 +22,8 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
         from: deployer,
         proxy: {
           proxyContract: "OpenZeppelinTransparentProxy",
+          viaAdminContract: "MultiProxyController",
+          owner: config.MultiProxyControllerOwner, // `owner` of the `adminContract`
         },
         log: true,
       }
@@ -33,6 +35,8 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
       from: deployer,
       proxy: {
         proxyContract: "OpenZeppelinTransparentProxy",
+        viaAdminContract: "MultiProxyController",
+        owner: config.MultiProxyControllerOwner, // `owner` of the `adminContract`
       },
       log: true,
     });
