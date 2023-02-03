@@ -1,6 +1,7 @@
 import { Network } from "hardhat/types";
 import { promises as fs } from "fs";
 import path from "path";
+import { format } from "prettier";
 
 export const getDeploymentFileByName = async (
   fileName: string,
@@ -28,7 +29,10 @@ export const setImplementation = async (
 
   await fs.writeFile(
     path.join(__dirname, `./deployments/${network.name}/${contractName}.json`),
-    JSON.stringify(contract)
+    format(JSON.stringify(contract), {
+      semi: false,
+      parser: "json",
+    })
   );
 
   return contractImplementation.address;

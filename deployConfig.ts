@@ -38,7 +38,7 @@ const config: {
     sushiRouter: "0x1b02dA8Cb0d097eB8D57A175b88c7D8b47997506",
     WETH: "0x82aF49447D8a07e3bd95BD0d56f35241523fBab1",
     swapTarget: "0xDef1C0ded9bec7F1a1670819833240f027b25EfF",
-    MultiProxyControllerOwner: "0xDEA9196Dcdd2173D6E369c2AcC0faCc83fD9346a",
+    MultiProxyControllerOwner: "0x3863A65CE278a240f9Aa2A4b4A48493bE59E6139",
   },
 };
 

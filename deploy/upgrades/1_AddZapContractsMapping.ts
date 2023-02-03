@@ -51,48 +51,48 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
     network
   );
 
-  await execute(
-    "MultiProxyController",
-    { from: deployer },
-    "upgradeProxyTo",
-    0,
-    NFTXVaultFactoryUpgradeable_Implementation
-  );
-  await execute(
-    "MultiProxyController",
-    { from: deployer },
-    "upgradeProxyTo",
-    5,
-    NFTXInventoryStaking_Implementation
-  );
+  // await execute(
+  //   "MultiProxyController",
+  //   { from: deployer },
+  //   "upgradeProxyTo",
+  //   0,
+  //   NFTXVaultFactoryUpgradeable_Implementation
+  // );
+  // await execute(
+  //   "MultiProxyController",
+  //   { from: deployer },
+  //   "upgradeProxyTo",
+  //   5,
+  //   NFTXInventoryStaking_Implementation
+  // );
 
-  // add zaps to `zapContracts` mapping
-  const NFTXStakingZap = await deployments.get("NFTXStakingZap");
-  await execute(
-    "NFTXVaultFactoryUpgradeable",
-    { from: deployer },
-    "setZapContract",
-    NFTXStakingZap.address,
-    true
-  );
+  // // add zaps to `zapContracts` mapping
+  // const NFTXStakingZap = await deployments.get("NFTXStakingZap");
+  // await execute(
+  //   "NFTXVaultFactoryUpgradeable",
+  //   { from: deployer },
+  //   "setZapContract",
+  //   NFTXStakingZap.address,
+  //   true
+  // );
 
-  const NFTXYieldStakingZap = await deployments.get("NFTXYieldStakingZap");
-  await execute(
-    "NFTXVaultFactoryUpgradeable",
-    { from: deployer },
-    "setZapContract",
-    NFTXYieldStakingZap.address,
-    true
-  );
+  // const NFTXYieldStakingZap = await deployments.get("NFTXYieldStakingZap");
+  // await execute(
+  //   "NFTXVaultFactoryUpgradeable",
+  //   { from: deployer },
+  //   "setZapContract",
+  //   NFTXYieldStakingZap.address,
+  //   true
+  // );
 
-  const NFTXVaultCreationZap = await deployments.get("NFTXVaultCreationZap");
-  await execute(
-    "NFTXVaultFactoryUpgradeable",
-    { from: deployer },
-    "setZapContract",
-    NFTXVaultCreationZap.address,
-    true
-  );
+  // const NFTXVaultCreationZap = await deployments.get("NFTXVaultCreationZap");
+  // await execute(
+  //   "NFTXVaultFactoryUpgradeable",
+  //   { from: deployer },
+  //   "setZapContract",
+  //   NFTXVaultCreationZap.address,
+  //   true
+  // );
 };
 export default func;
 func.tags = ["1_AddZapContractsMapping"];
