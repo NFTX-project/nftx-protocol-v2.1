@@ -1,6 +1,8 @@
 import { HardhatRuntimeEnvironment, Network } from "hardhat/types";
 import { DeployFunction } from "hardhat-deploy/types";
 import { utils } from "ethers";
+import { promises as fs } from "fs";
+import path from "path";
 import deployConfig from "../../deployConfig";
 
 const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
@@ -37,52 +39,74 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
   } catch (e) {}
 
   // upgrade with new implementation
-  const NFTXVaultFactoryUpgradeable = await deployments.get(
-    "NFTXVaultFactoryUpgradeable"
+  const NFTXVaultFactoryUpgradeable_Implementation = JSON.parse(
+    await fs.readFile(
+      path.join(
+        __dirname,
+        `../../deployments/${network.name}/NFTXVaultFactoryUpgradeable_Implementation.json`
+      ),
+      "utf8"
+    )
   );
-  const NFTXInventoryStaking = await deployments.get("NFTXInventoryStaking");
-  await execute(
-    "MultiProxyController",
-    { from: deployer },
-    "upgradeProxyTo",
-    0,
-    NFTXVaultFactoryUpgradeable.implementation
+  const NFTXInventoryStaking_Implementation = JSON.parse(
+    await fs.readFile(
+      path.join(
+        __dirname,
+        `../../deployments/${network.name}/NFTXInventoryStaking_Implementation.json`
+      ),
+      "utf8"
+    )
   );
-  await execute(
-    "MultiProxyController",
-    { from: deployer },
-    "upgradeProxyTo",
-    5,
-    NFTXInventoryStaking.implementation
-  );
+
+  console.log({
+    NFTXVaultFactoryUpgradeable_Implementation:
+      NFTXVaultFactoryUpgradeable_Implementation.address,
+    NFTXInventoryStaking_Implementation:
+      NFTXInventoryStaking_Implementation.address,
+  });
+
+  // await execute(
+  //   "MultiProxyController",
+  //   { from: deployer },
+  //   "upgradeProxyTo",
+  //   0,
+  //   NFTXVaultFactoryUpgradeable_Implementation.address
+  // );
+  // await execute(
+  //   "MultiProxyController",
+  //   { from: deployer },
+  //   "upgradeProxyTo",
+  //   5,
+  //   NFTXInventoryStaking_Implementation.address
+  // );
 
   // add zaps to `zapContracts` mapping
-  const NFTXStakingZap = await deployments.get("NFTXStakingZap");
-  await execute(
-    "NFTXVaultFactoryUpgradeable",
-    { from: deployer },
-    "setZapContract",
-    NFTXStakingZap.address,
-    true
-  );
+  // const NFTXStakingZap = await deployments.get("NFTXStakingZap");
+  // await execute(
+  //   "NFTXVaultFactoryUpgradeable",
+  //   { from: deployer },
+  //   "setZapContract",
+  //   NFTXStakingZap.address,
+  //   true
+  // );
 
-  const NFTXYieldStakingZap = await deployments.get("NFTXYieldStakingZap");
-  await execute(
-    "NFTXVaultFactoryUpgradeable",
-    { from: deployer },
-    "setZapContract",
-    NFTXYieldStakingZap.address,
-    true
-  );
+  // const NFTXYieldStakingZap = await deployments.get("NFTXYieldStakingZap");
+  // await execute(
+  //   "NFTXVaultFactoryUpgradeable",
+  //   { from: deployer },
+  //   "setZapContract",
+  //   NFTXYieldStakingZap.address,
+  //   true
+  // );
 
-  const NFTXVaultCreationZap = await deployments.get("NFTXVaultCreationZap");
-  await execute(
-    "NFTXVaultFactoryUpgradeable",
-    { from: deployer },
-    "setZapContract",
-    NFTXVaultCreationZap.address,
-    true
-  );
+  // const NFTXVaultCreationZap = await deployments.get("NFTXVaultCreationZap");
+  // await execute(
+  //   "NFTXVaultFactoryUpgradeable",
+  //   { from: deployer },
+  //   "setZapContract",
+  //   NFTXVaultCreationZap.address,
+  //   true
+  // );
 };
 export default func;
 func.tags = ["1_AddZapContractsMapping"];
