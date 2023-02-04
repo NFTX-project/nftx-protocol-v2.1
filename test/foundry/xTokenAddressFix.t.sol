@@ -73,7 +73,7 @@ contract xTokenAddressFix is Test {
         vm.warp(timelockUntil + 1);
 
         vm.prank(dulplicate_xSQGL_Holder);
-        inventoryStakingProxy.directWithdraw(duplicate_xSQGL, xTokenBalance);
+        inventoryStakingProxy.directWithdraw(VAULT_ID, xTokenBalance);
 
         assertGt(
             IERC20Upgradeable(SQGL).balanceOf(dulplicate_xSQGL_Holder),
