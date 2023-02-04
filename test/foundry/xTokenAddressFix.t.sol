@@ -38,6 +38,11 @@ contract xTokenAddressFix is Test {
     }
 
     function testXTokenAddrCorrect() public {
+        require(
+            inventoryStakingProxy.xTokenAddr(SQGL) != xSQGL,
+            "Current XToken address match"
+        );
+
         // upgrade proxy
         NFTXInventoryStaking newInventoryStakingImpl = new NFTXInventoryStaking();
         vm.prank(MULTISIG);
