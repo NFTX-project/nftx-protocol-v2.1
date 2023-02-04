@@ -46,30 +46,19 @@
       "name": "Upgraded",
       "type": "event"
     },
-    {
-      "stateMutability": "payable",
-      "type": "fallback"
-    },
+    { "stateMutability": "payable", "type": "fallback" },
     {
       "inputs": [],
       "name": "admin",
       "outputs": [
-        {
-          "internalType": "address",
-          "name": "admin_",
-          "type": "address"
-        }
+        { "internalType": "address", "name": "admin_", "type": "address" }
       ],
       "stateMutability": "nonpayable",
       "type": "function"
     },
     {
       "inputs": [
-        {
-          "internalType": "address",
-          "name": "newAdmin",
-          "type": "address"
-        }
+        { "internalType": "address", "name": "newAdmin", "type": "address" }
       ],
       "name": "changeAdmin",
       "outputs": [],
@@ -109,21 +98,14 @@
           "name": "newImplementation",
           "type": "address"
         },
-        {
-          "internalType": "bytes",
-          "name": "data",
-          "type": "bytes"
-        }
+        { "internalType": "bytes", "name": "data", "type": "bytes" }
       ],
       "name": "upgradeToAndCall",
       "outputs": [],
       "stateMutability": "payable",
       "type": "function"
     },
-    {
-      "stateMutability": "payable",
-      "type": "receive"
-    },
+    { "stateMutability": "payable", "type": "receive" },
     {
       "anonymous": false,
       "inputs": [
@@ -321,48 +303,24 @@
     },
     {
       "inputs": [
-        {
-          "internalType": "uint256",
-          "name": "vaultId",
-          "type": "uint256"
-        },
-        {
-          "internalType": "address",
-          "name": "who",
-          "type": "address"
-        }
+        { "internalType": "uint256", "name": "vaultId", "type": "uint256" },
+        { "internalType": "address", "name": "who", "type": "address" }
       ],
       "name": "balanceOf",
-      "outputs": [
-        {
-          "internalType": "uint256",
-          "name": "",
-          "type": "uint256"
-        }
-      ],
+      "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
       "stateMutability": "view",
       "type": "function"
     },
     {
       "inputs": [],
       "name": "childImplementation",
-      "outputs": [
-        {
-          "internalType": "address",
-          "name": "",
-          "type": "address"
-        }
-      ],
+      "outputs": [{ "internalType": "address", "name": "", "type": "address" }],
       "stateMutability": "view",
       "type": "function"
     },
     {
       "inputs": [
-        {
-          "internalType": "uint256",
-          "name": "vaultId",
-          "type": "uint256"
-        }
+        { "internalType": "uint256", "name": "vaultId", "type": "uint256" }
       ],
       "name": "deployXTokenForVault",
       "outputs": [],
@@ -371,16 +329,8 @@
     },
     {
       "inputs": [
-        {
-          "internalType": "uint256",
-          "name": "vaultId",
-          "type": "uint256"
-        },
-        {
-          "internalType": "uint256",
-          "name": "_amount",
-          "type": "uint256"
-        }
+        { "internalType": "uint256", "name": "vaultId", "type": "uint256" },
+        { "internalType": "uint256", "name": "_amount", "type": "uint256" }
       ],
       "name": "deposit",
       "outputs": [],
@@ -390,75 +340,31 @@
     {
       "inputs": [],
       "name": "inventoryLockTimeErc20",
-      "outputs": [
-        {
-          "internalType": "uint256",
-          "name": "",
-          "type": "uint256"
-        }
-      ],
+      "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
       "stateMutability": "view",
       "type": "function"
     },
     {
       "inputs": [
-        {
-          "internalType": "address",
-          "name": "addr",
-          "type": "address"
-        },
-        {
-          "internalType": "uint256",
-          "name": "vaultId",
-          "type": "uint256"
-        }
+        { "internalType": "address", "name": "addr", "type": "address" },
+        { "internalType": "uint256", "name": "vaultId", "type": "uint256" }
       ],
       "name": "isAddressTimelockExcluded",
-      "outputs": [
-        {
-          "internalType": "bool",
-          "name": "",
-          "type": "bool"
-        }
-      ],
+      "outputs": [{ "internalType": "bool", "name": "", "type": "bool" }],
       "stateMutability": "view",
       "type": "function"
     },
     {
-      "inputs": [
-        {
-          "internalType": "address",
-          "name": "",
-          "type": "address"
-        }
-      ],
+      "inputs": [{ "internalType": "address", "name": "", "type": "address" }],
       "name": "isGuardian",
-      "outputs": [
-        {
-          "internalType": "bool",
-          "name": "",
-          "type": "bool"
-        }
-      ],
+      "outputs": [{ "internalType": "bool", "name": "", "type": "bool" }],
       "stateMutability": "view",
       "type": "function"
     },
     {
-      "inputs": [
-        {
-          "internalType": "uint256",
-          "name": "",
-          "type": "uint256"
-        }
-      ],
+      "inputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
       "name": "isPaused",
-      "outputs": [
-        {
-          "internalType": "bool",
-          "name": "",
-          "type": "bool"
-        }
-      ],
+      "outputs": [{ "internalType": "bool", "name": "", "type": "bool" }],
       "stateMutability": "view",
       "type": "function"
     },
@@ -477,11 +383,7 @@
     },
     {
       "inputs": [
-        {
-          "internalType": "uint256",
-          "name": "lockId",
-          "type": "uint256"
-        }
+        { "internalType": "uint256", "name": "lockId", "type": "uint256" }
       ],
       "name": "onlyOwnerIfPaused",
       "outputs": [],
@@ -491,23 +393,13 @@
     {
       "inputs": [],
       "name": "owner",
-      "outputs": [
-        {
-          "internalType": "address",
-          "name": "",
-          "type": "address"
-        }
-      ],
+      "outputs": [{ "internalType": "address", "name": "", "type": "address" }],
       "stateMutability": "view",
       "type": "function"
     },
     {
       "inputs": [
-        {
-          "internalType": "uint256",
-          "name": "lockId",
-          "type": "uint256"
-        }
+        { "internalType": "uint256", "name": "lockId", "type": "uint256" }
       ],
       "name": "pause",
       "outputs": [],
@@ -516,25 +408,11 @@
     },
     {
       "inputs": [
-        {
-          "internalType": "uint256",
-          "name": "vaultId",
-          "type": "uint256"
-        },
-        {
-          "internalType": "uint256",
-          "name": "amount",
-          "type": "uint256"
-        }
+        { "internalType": "uint256", "name": "vaultId", "type": "uint256" },
+        { "internalType": "uint256", "name": "amount", "type": "uint256" }
       ],
       "name": "receiveRewards",
-      "outputs": [
-        {
-          "internalType": "bool",
-          "name": "",
-          "type": "bool"
-        }
-      ],
+      "outputs": [{ "internalType": "bool", "name": "", "type": "bool" }],
       "stateMutability": "nonpayable",
       "type": "function"
     },
@@ -547,11 +425,7 @@
     },
     {
       "inputs": [
-        {
-          "internalType": "uint256",
-          "name": "time",
-          "type": "uint256"
-        }
+        { "internalType": "uint256", "name": "time", "type": "uint256" }
       ],
       "name": "setInventoryLockTimeErc20",
       "outputs": [],
@@ -560,16 +434,8 @@
     },
     {
       "inputs": [
-        {
-          "internalType": "address",
-          "name": "addr",
-          "type": "address"
-        },
-        {
-          "internalType": "bool",
-          "name": "_isGuardian",
-          "type": "bool"
-        }
+        { "internalType": "address", "name": "addr", "type": "address" },
+        { "internalType": "bool", "name": "_isGuardian", "type": "bool" }
       ],
       "name": "setIsGuardian",
       "outputs": [],
@@ -578,11 +444,7 @@
     },
     {
       "inputs": [
-        {
-          "internalType": "address",
-          "name": "addr",
-          "type": "address"
-        }
+        { "internalType": "address", "name": "addr", "type": "address" }
       ],
       "name": "setTimelockExcludeList",
       "outputs": [],
@@ -604,21 +466,9 @@
     },
     {
       "inputs": [
-        {
-          "internalType": "uint256",
-          "name": "vaultId",
-          "type": "uint256"
-        },
-        {
-          "internalType": "uint256",
-          "name": "amount",
-          "type": "uint256"
-        },
-        {
-          "internalType": "address",
-          "name": "to",
-          "type": "address"
-        },
+        { "internalType": "uint256", "name": "vaultId", "type": "uint256" },
+        { "internalType": "uint256", "name": "amount", "type": "uint256" },
+        { "internalType": "address", "name": "to", "type": "address" },
         {
           "internalType": "uint256",
           "name": "timelockLength",
@@ -626,47 +476,23 @@
         }
       ],
       "name": "timelockMintFor",
-      "outputs": [
-        {
-          "internalType": "uint256",
-          "name": "",
-          "type": "uint256"
-        }
-      ],
+      "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
       "stateMutability": "nonpayable",
       "type": "function"
     },
     {
       "inputs": [
-        {
-          "internalType": "uint256",
-          "name": "vaultId",
-          "type": "uint256"
-        },
-        {
-          "internalType": "address",
-          "name": "who",
-          "type": "address"
-        }
+        { "internalType": "uint256", "name": "vaultId", "type": "uint256" },
+        { "internalType": "address", "name": "who", "type": "address" }
       ],
       "name": "timelockUntil",
-      "outputs": [
-        {
-          "internalType": "uint256",
-          "name": "",
-          "type": "uint256"
-        }
-      ],
+      "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
       "stateMutability": "view",
       "type": "function"
     },
     {
       "inputs": [
-        {
-          "internalType": "address",
-          "name": "newOwner",
-          "type": "address"
-        }
+        { "internalType": "address", "name": "newOwner", "type": "address" }
       ],
       "name": "transferOwnership",
       "outputs": [],
@@ -675,11 +501,7 @@
     },
     {
       "inputs": [
-        {
-          "internalType": "uint256",
-          "name": "lockId",
-          "type": "uint256"
-        }
+        { "internalType": "uint256", "name": "lockId", "type": "uint256" }
       ],
       "name": "unpause",
       "outputs": [],
@@ -701,35 +523,17 @@
     },
     {
       "inputs": [
-        {
-          "internalType": "uint256",
-          "name": "vaultId",
-          "type": "uint256"
-        }
+        { "internalType": "uint256", "name": "vaultId", "type": "uint256" }
       ],
       "name": "vaultXToken",
-      "outputs": [
-        {
-          "internalType": "address",
-          "name": "",
-          "type": "address"
-        }
-      ],
+      "outputs": [{ "internalType": "address", "name": "", "type": "address" }],
       "stateMutability": "view",
       "type": "function"
     },
     {
       "inputs": [
-        {
-          "internalType": "uint256",
-          "name": "vaultId",
-          "type": "uint256"
-        },
-        {
-          "internalType": "uint256",
-          "name": "_share",
-          "type": "uint256"
-        }
+        { "internalType": "uint256", "name": "vaultId", "type": "uint256" },
+        { "internalType": "uint256", "name": "_share", "type": "uint256" }
       ],
       "name": "withdraw",
       "outputs": [],
@@ -738,64 +542,32 @@
     },
     {
       "inputs": [
-        {
-          "internalType": "address",
-          "name": "baseToken",
-          "type": "address"
-        }
+        { "internalType": "address", "name": "baseToken", "type": "address" }
       ],
       "name": "xTokenAddr",
-      "outputs": [
-        {
-          "internalType": "address",
-          "name": "",
-          "type": "address"
-        }
-      ],
+      "outputs": [{ "internalType": "address", "name": "", "type": "address" }],
       "stateMutability": "view",
       "type": "function"
     },
     {
       "inputs": [
-        {
-          "internalType": "uint256",
-          "name": "vaultId",
-          "type": "uint256"
-        }
+        { "internalType": "uint256", "name": "vaultId", "type": "uint256" }
       ],
       "name": "xTokenShareValue",
-      "outputs": [
-        {
-          "internalType": "uint256",
-          "name": "",
-          "type": "uint256"
-        }
-      ],
+      "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
       "stateMutability": "view",
       "type": "function"
     },
     {
       "inputs": [
-        {
-          "internalType": "address",
-          "name": "_logic",
-          "type": "address"
-        },
-        {
-          "internalType": "address",
-          "name": "admin_",
-          "type": "address"
-        },
-        {
-          "internalType": "bytes",
-          "name": "_data",
-          "type": "bytes"
-        }
+        { "internalType": "address", "name": "_logic", "type": "address" },
+        { "internalType": "address", "name": "admin_", "type": "address" },
+        { "internalType": "bytes", "name": "_data", "type": "bytes" }
       ],
       "stateMutability": "payable",
       "type": "constructor"
     }
   ],
   "numDeployments": 2,
-  "implementation": "0x608F0D84657BB876DDEDD8d8d5aB9D12639d5798"
+  "implementation": "0xCCB1CFc9CaA2b73a82Ad23A9b3219Da900485880"
 }
