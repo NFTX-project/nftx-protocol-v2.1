@@ -15,21 +15,6 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
   // so let the following code deploy new implementation (despite error), store it in deployments folder and then upgrade proxy implementation
 
   try {
-    const NFTXVaultFactoryUpgradeable = await deploy(
-      "NFTXVaultFactoryUpgradeable",
-      {
-        from: deployer,
-        proxy: {
-          proxyContract: "OpenZeppelinTransparentProxy",
-          viaAdminContract: "MultiProxyController",
-          owner: config.MultiProxyControllerOwner, // `owner` of the `adminContract`
-        },
-        log: true,
-      }
-    );
-  } catch (e) {}
-
-  try {
     const NFTXInventoryStaking = await deploy("NFTXInventoryStaking", {
       from: deployer,
       proxy: {
@@ -42,10 +27,6 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
   } catch (e) {}
 
   // not using deployments.get() for implementations here as it returns `undefined` if we had just modified the deployments json file.
-  const NFTXVaultFactoryUpgradeable_Implementation = await setImplementation(
-    "NFTXVaultFactoryUpgradeable",
-    network
-  );
   const NFTXInventoryStaking_Implementation = await setImplementation(
     "NFTXInventoryStaking",
     network
@@ -55,44 +36,9 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
   //   "MultiProxyController",
   //   { from: deployer },
   //   "upgradeProxyTo",
-  //   0,
-  //   NFTXVaultFactoryUpgradeable_Implementation
-  // );
-  // await execute(
-  //   "MultiProxyController",
-  //   { from: deployer },
-  //   "upgradeProxyTo",
   //   5,
   //   NFTXInventoryStaking_Implementation
   // );
-
-  // // add zaps to `zapContracts` mapping
-  // const NFTXStakingZap = await deployments.get("NFTXStakingZap");
-  // await execute(
-  //   "NFTXVaultFactoryUpgradeable",
-  //   { from: deployer },
-  //   "setZapContract",
-  //   NFTXStakingZap.address,
-  //   true
-  // );
-
-  // const NFTXYieldStakingZap = await deployments.get("NFTXYieldStakingZap");
-  // await execute(
-  //   "NFTXVaultFactoryUpgradeable",
-  //   { from: deployer },
-  //   "setZapContract",
-  //   NFTXYieldStakingZap.address,
-  //   true
-  // );
-
-  // const NFTXVaultCreationZap = await deployments.get("NFTXVaultCreationZap");
-  // await execute(
-  //   "NFTXVaultFactoryUpgradeable",
-  //   { from: deployer },
-  //   "setZapContract",
-  //   NFTXVaultCreationZap.address,
-  //   true
-  // );
 };
 export default func;
-func.tags = ["1_AddZapContractsMapping"];
+func.tags = ["4_FixXTokenAddress"];

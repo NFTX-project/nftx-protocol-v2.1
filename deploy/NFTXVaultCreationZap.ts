@@ -52,5 +52,5 @@ func.dependencies = [
   // "NFTXVaultFactoryUpgradeable",
   // "NFTXInventoryStaking",
   // "NFTXLPStaking",
-  // "SushiHelper",
+  "SushiHelper",
 ];
