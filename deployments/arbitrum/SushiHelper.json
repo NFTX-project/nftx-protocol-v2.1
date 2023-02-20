@@ -1,0 +1,80 @@
+{
+  "address": "0x48953c64f6a8ab9c502de035f88eed005F3aD7A4",
+  "abi": [
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "sushiRouterFactory",
+          "type": "address"
+        },
+        {
+          "internalType": "address",
+          "name": "tokenA",
+          "type": "address"
+        },
+        {
+          "internalType": "address",
+          "name": "tokenB",
+          "type": "address"
+        }
+      ],
+      "name": "pairFor",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "pair",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    }
+  ],
+  "transactionHash": "0xcd432aa07404d39606315abf09df5f384c29b9f62dc153a368f284b445c686ef",
+  "receipt": {
+    "to": null,
+    "from": "0xDEA9196Dcdd2173D6E369c2AcC0faCc83fD9346a",
+    "contractAddress": "0x48953c64f6a8ab9c502de035f88eed005F3aD7A4",
+    "transactionIndex": 1,
+    "gasUsed": "2815817",
+    "logsBloom": "0x00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+    "blockHash": "0xf682a0714ca8b4371896d10093c3657952666c86a552ab6be1b980868f050972",
+    "transactionHash": "0xcd432aa07404d39606315abf09df5f384c29b9f62dc153a368f284b445c686ef",
+    "logs": [],
+    "blockNumber": 57464223,
+    "cumulativeGasUsed": "2815817",
+    "status": 1,
+    "byzantium": true
+  },
+  "args": [],
+  "numDeployments": 1,
+  "solcInputHash": "a20dbdff6dc45f8d8bc4c474ea40c4ee",
+  "metadata": "{\"compiler\":{\"version\":\"0.8.4+commit.c7e474f2\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[{\"internalType\":\"address\",\"name\":\"sushiRouterFactory\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"tokenA\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"tokenB\",\"type\":\"address\"}],\"name\":\"pairFor\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"pair\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"}],\"devdoc\":{\"kind\":\"dev\",\"methods\":{\"pairFor(address,address,address)\":{\"returns\":{\"pair\":\"Address of our token pair\"}}},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{\"pairFor(address,address,address)\":{\"notice\":\"Calculates the CREATE2 address for a sushi pair without making any external calls. \"}},\"version\":1}},\"settings\":{\"compilationTarget\":{\"contracts/solidity/util/SushiHelper.sol\":\"SushiHelper\"},\"evmVersion\":\"istanbul\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\",\"useLiteralContent\":true},\"optimizer\":{\"enabled\":true,\"runs\":1000},\"remappings\":[]},\"sources\":{\"contracts/solidity/util/SushiHelper.sol\":{\"content\":\"// SPDX-License-Identifier: MIT\\n\\npragma solidity ^0.8.0;\\n\\n\\ncontract SushiHelper {\\n\\n  /**\\n   * @notice Calculates the CREATE2 address for a sushi pair without making any\\n   * external calls.\\n   * \\n   * @return pair Address of our token pair\\n   */\\n\\n  function pairFor(address sushiRouterFactory, address tokenA, address tokenB) external view returns (address pair) {\\n    (address token0, address token1) = sortTokens(tokenA, tokenB);\\n    pair = address(uint160(uint256(keccak256(abi.encodePacked(\\n      hex'ff',\\n      sushiRouterFactory,\\n      keccak256(abi.encodePacked(token0, token1)),\\n      hex'e18a34eb0e04b04f7a0ac29a6e80748dca96319b42c54d679cb821dca90c6303' // init code hash\\n    )))));\\n  }\\n\\n\\n  /**\\n   * @notice Returns sorted token addresses, used to handle return values from pairs sorted in\\n   * this order.\\n   */\\n\\n  function sortTokens(address tokenA, address tokenB) internal pure returns (address token0, address token1) {\\n      require(tokenA != tokenB, 'UniswapV2Library: IDENTICAL_ADDRESSES');\\n      (token0, token1) = tokenA < tokenB ? (tokenA, tokenB) : (tokenB, tokenA);\\n      require(token0 != address(0), 'UniswapV2Library: ZERO_ADDRESS');\\n  }\\n\\n}\\n\",\"keccak256\":\"0x977efbc5b30528023d80a5f349b746d71440c3751312d0f1cc0cbcb86be0d8af\",\"license\":\"MIT\"}},\"version\":1}",
+  "bytecode": "0x608060405234801561001057600080fd5b506102f9806100206000396000f3fe608060405234801561001057600080fd5b506004361061002b5760003560e01c80636d91c0e214610030575b600080fd5b61004361003e366004610281565b61005f565b6040516001600160a01b03909116815260200160405180910390f35b600080600061006e8585610150565b6040516bffffffffffffffffffffffff19606084811b8216602084015283901b166034820152919350915086906048016040516020818303038152906040528051906020012060405160200161012e9291907fff00000000000000000000000000000000000000000000000000000000000000815260609290921b6bffffffffffffffffffffffff1916600183015260158201527fe18a34eb0e04b04f7a0ac29a6e80748dca96319b42c54d679cb821dca90c6303603582015260550190565b60408051601f1981840301815291905280516020909101209695505050505050565b600080826001600160a01b0316846001600160a01b031614156101e05760405162461bcd60e51b815260206004820152602560248201527f556e697377617056324c6962726172793a204944454e544943414c5f4144445260448201527f455353455300000000000000000000000000000000000000000000000000000060648201526084015b60405180910390fd5b826001600160a01b0316846001600160a01b031610610200578284610203565b83835b90925090506001600160a01b03821661025e5760405162461bcd60e51b815260206004820152601e60248201527f556e697377617056324c6962726172793a205a45524f5f41444452455353000060448201526064016101d7565b9250929050565b80356001600160a01b038116811461027c57600080fd5b919050565b600080600060608486031215610295578283fd5b61029e84610265565b92506102ac60208501610265565b91506102ba60408501610265565b9050925092509256fea2646970667358221220c2afb53ce6d2a2c1b316128577982392acfa9420799eca6c7464bbde18da6cab64736f6c63430008040033",
+  "deployedBytecode": "0x608060405234801561001057600080fd5b506004361061002b5760003560e01c80636d91c0e214610030575b600080fd5b61004361003e366004610281565b61005f565b6040516001600160a01b03909116815260200160405180910390f35b600080600061006e8585610150565b6040516bffffffffffffffffffffffff19606084811b8216602084015283901b166034820152919350915086906048016040516020818303038152906040528051906020012060405160200161012e9291907fff00000000000000000000000000000000000000000000000000000000000000815260609290921b6bffffffffffffffffffffffff1916600183015260158201527fe18a34eb0e04b04f7a0ac29a6e80748dca96319b42c54d679cb821dca90c6303603582015260550190565b60408051601f1981840301815291905280516020909101209695505050505050565b600080826001600160a01b0316846001600160a01b031614156101e05760405162461bcd60e51b815260206004820152602560248201527f556e697377617056324c6962726172793a204944454e544943414c5f4144445260448201527f455353455300000000000000000000000000000000000000000000000000000060648201526084015b60405180910390fd5b826001600160a01b0316846001600160a01b031610610200578284610203565b83835b90925090506001600160a01b03821661025e5760405162461bcd60e51b815260206004820152601e60248201527f556e697377617056324c6962726172793a205a45524f5f41444452455353000060448201526064016101d7565b9250929050565b80356001600160a01b038116811461027c57600080fd5b919050565b600080600060608486031215610295578283fd5b61029e84610265565b92506102ac60208501610265565b91506102ba60408501610265565b9050925092509256fea2646970667358221220c2afb53ce6d2a2c1b316128577982392acfa9420799eca6c7464bbde18da6cab64736f6c63430008040033",
+  "devdoc": {
+    "kind": "dev",
+    "methods": {
+      "pairFor(address,address,address)": {
+        "returns": {
+          "pair": "Address of our token pair"
+        }
+      }
+    },
+    "version": 1
+  },
+  "userdoc": {
+    "kind": "user",
+    "methods": {
+      "pairFor(address,address,address)": {
+        "notice": "Calculates the CREATE2 address for a sushi pair without making any external calls. "
+      }
+    },
+    "version": 1
+  },
+  "storageLayout": {
+    "storage": [],
+    "types": null
+  }
+}
