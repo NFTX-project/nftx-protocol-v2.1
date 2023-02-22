@@ -3,6 +3,7 @@ import { DeployFunction } from "hardhat-deploy/types";
 import { utils } from "ethers";
 import { promises as fs } from "fs";
 import path from "path";
+import { setImplementation } from "../../helpers";
 import deployConfig from "../../deployConfig";
 
 const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
@@ -20,28 +21,25 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
       from: deployer,
       proxy: {
         proxyContract: "OpenZeppelinTransparentProxy",
+        viaAdminContract: "MultiProxyController",
+        owner: config.MultiProxyControllerOwner, // `owner` of the `adminContract`
       },
       log: true,
     });
   } catch (e) {}
 
-  const NFTXVaultFactoryUpgradeable_Implementation = JSON.parse(
-    await fs.readFile(
-      path.join(
-        __dirname,
-        `../../deployments/${network.name}/NFTXVaultFactoryUpgradeable_Implementation.json`
-      ),
-      "utf8"
-    )
+  const NFTXVaultFactoryUpgradeable_Implementation = await setImplementation(
+    "NFTXVaultFactoryUpgradeable",
+    network
   );
 
-  await execute(
-    "MultiProxyController",
-    { from: deployer },
-    "upgradeProxyTo",
-    0,
-    NFTXVaultFactoryUpgradeable_Implementation.address
-  );
+  // await execute(
+  //   "MultiProxyController",
+  //   { from: deployer },
+  //   "upgradeProxyTo",
+  //   0,
+  //   NFTXVaultFactoryUpgradeable_Implementation.address
+  // );
 };
 export default func;
-func.tags = ["4_BeaconImplementationFix"];
+func.tags = ["5_BeaconImplementationFix"];
