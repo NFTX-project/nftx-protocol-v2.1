@@ -15,6 +15,7 @@ export const getDeploymentFileByName = async (
   );
 };
 
+// alternative to deployments.get() for implementations as it returns `undefined` if we had just modified the deployments json file.
 export const setImplementation = async (
   contractName: string,
   network: Network
