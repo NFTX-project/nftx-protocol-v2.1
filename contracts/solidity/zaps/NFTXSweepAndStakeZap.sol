@@ -26,8 +26,6 @@ contract SweepAndStakeZap is IERC721Receiver, Ownable, Pausable {
     /// Internal store of GemSwap contract
     address gemSwap;
 
-    uint[] tokens;
-
     /// @notice Emitted when ..
     event Sweep(uint ethAmount);
 
@@ -53,29 +51,25 @@ contract SweepAndStakeZap is IERC721Receiver, Ownable, Pausable {
         (bool success, ) = payable(gemSwap).call{value: msg.value}(txData);
         require(success, 'D');
 
+        // The sender will receive the NFTs transferred, but they should be
+        // pre-approved and we can transfer them in.
+        for (uint i; i < expectedTokenIds.length;) {
+            // TODO: Do we want to check that we got the tokens, or just fail?
+            IERC721(vault.assetAddress()).transferFrom(msg.sender, address(this), expectedTokenIds[i]);
+            unchecked { ++i; }
+        }
+
+        IERC721(vault.assetAddress()).setApprovalForAll(address(staking), true);
+
         console.log('POST SWEEP');
 
-        // NOTE: NEEDS TO BE EXCLUDED FROM TIMELOCK
-
-        if (vault.assetAddress() == 0xb47e3cd837dDF8e4c57F05d70Ab865de6e193BBB) {
-            for (uint i; i < expectedTokenIds.length;) {
-                // CryptoPunks.
-                (bool success,) = address(msg.sender).call(
-                    abi.encodeWithSignature('offerPunkForSaleToAddress(uint256,uint256,address)', expectedTokenIds[i], 0, address(staking))
-                );
-                require(success, 'E');
-
-                unchecked { ++i; }
-            }
-        } else {
-            IERC721(vault.assetAddress()).setApprovalForAll(address(staking), true);
-        }
+        // TODO: NEEDS TO BE EXCLUDED FROM TIMELOCK IN THE TEST
 
         require(expectedTokenIds.length != 0, 'X');
 
         // If we have liquidity, stake into LP
         if (liquidityAmount != 0) {
-            staking.addLiquidity721ETHTo(vault.vaultId(), tokens, liquidityAmount, msg.sender);
+            staking.addLiquidity721ETHTo(vault.vaultId(), expectedTokenIds, liquidityAmount, msg.sender);
         }
         // Otherwise, we stake into Inventory
         else {
@@ -83,14 +77,11 @@ contract SweepAndStakeZap is IERC721Receiver, Ownable, Pausable {
             uint startXTokenBalance = IERC20(address(vault)).balanceOf(address(this));
 
             // Provide inventory
-            staking.provideInventory721(vault.vaultId(), tokens);
+            staking.provideInventory721(vault.vaultId(), expectedTokenIds);
 
             // Transfer xToken to the sender
             IERC20(address(vault)).transfer(msg.sender, IERC20(address(vault)).balanceOf(address(this)) - startXTokenBalance);
         }
-
-        // Delete our stored ERC tokens
-        delete tokens;
 
         // Emit the amount of ETH used to sweep
         uint spent = startBalance - address(this).balance;
@@ -119,15 +110,15 @@ contract SweepAndStakeZap is IERC721Receiver, Ownable, Pausable {
     /**
      * ..
      */
-    function onERC721Received(address operator, address from, uint256 tokenId, bytes calldata data) external override returns (bytes4) {
+    function onERC721Received(address operator, address from, uint256 tokenId, bytes calldata data) external pure override returns (bytes4) {
         return IERC721Receiver.onERC721Received.selector;
     }
 
     /**
      * ..
      */
-    // receive() external payable {
+    receive() external payable {
         //
-    // }
+    }
 
 }
