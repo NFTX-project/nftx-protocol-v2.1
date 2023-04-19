@@ -10,6 +10,8 @@
     "deploy:default": "hardhat deploy",
     "deploy:goerli": "hardhat deploy --network goerli",
     "verify:goerli": "hardhat --network goerli etherscan-verify",
+    "deploy:sepolia": "hardhat deploy --network sepolia",
+    "verify:sepolia": "hardhat --network sepolia etherscan-verify",
     "deploy:mainnet": "hardhat deploy --network mainnet",
     "verify:mainnet": "hardhat --network mainnet etherscan-verify",
     "deploy:arbitrum": "hardhat deploy --network arbitrum",

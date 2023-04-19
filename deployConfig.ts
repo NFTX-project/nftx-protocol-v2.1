@@ -20,6 +20,16 @@ const config: {
     swapTarget: "0xF91bB752490473B8342a3E964E855b9f9a2A668e",
     MultiProxyControllerOwner: "0xDEA9196Dcdd2173D6E369c2AcC0faCc83fD9346a",
   },
+  sepolia: {
+    uniLikeExchange: "0x024CE3e12Cb6e5eD0c942D9D3f4F7aeA07239A05", // Sushiswap Factory ["UniswapV2Factory"]
+    defaultPairedtoken: "0xe8188160f0b8e4a2940a6b9779ed0fe9a2506df7", // WETH
+    defaultPrefix: "x",
+    treasury: "0x000000000000000000000000000000000000dEaD",
+    sushiRouter: "0x1b02dA8Cb0d097eB8D57A175b88c7D8b47997506", // ["UniswapV2Router02"]
+    WETH: "0xe8188160f0b8e4a2940a6b9779ed0fe9a2506df7",
+    swapTarget: "0x000000000000000000000000000000000000dEaD", // 0x not yet on sepolia
+    MultiProxyControllerOwner: "0xDEA9196Dcdd2173D6E369c2AcC0faCc83fD9346a",
+  },
   mainnet: {
     uniLikeExchange: "0xC0AEe478e3658e2610c5F7A4A2E1777cE9e4f2Ac", // Sushiswap Factory
     defaultPairedtoken: "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2", // WETH
