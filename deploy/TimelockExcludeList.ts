@@ -30,4 +30,7 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
 };
 export default func;
 func.tags = ["TimelockExcludeList"];
-func.dependencies = ["NFTXInventoryStaking", "NFTXStakingZap"];
+func.dependencies = [
+  // "NFTXInventoryStaking",
+  // "NFTXStakingZap"
+];

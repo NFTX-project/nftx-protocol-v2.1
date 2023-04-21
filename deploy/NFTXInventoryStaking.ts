@@ -18,6 +18,8 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
     from: deployer,
     proxy: {
       proxyContract: "OpenZeppelinTransparentProxy",
+      viaAdminContract: "MultiProxyController",
+      owner: config.MultiProxyControllerOwner, // `owner` of the `adminContract`
       execute: {
         init: {
           methodName: "__NFTXInventoryStaking_init",
@@ -54,4 +56,8 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
 };
 export default func;
 func.tags = ["NFTXInventoryStaking"];
-func.dependencies = ["NFTXVaultFactoryUpgradeable", "NFTXSimpleFeeDistributor"];
+func.dependencies = [
+  "NFTXVaultFactoryUpgradeable",
+  "NFTXSimpleFeeDistributor",
+  "MultiProxyController",
+];
