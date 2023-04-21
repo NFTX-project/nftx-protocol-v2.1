@@ -55,11 +55,11 @@ iii. If need to deploy new implementation for a proxy which doesn't exist in the
 
 Contracts should be deployed in the following order:
 
-1. StakingTokenProvider
-2. NFTXLPStaking
-3. NFTXSimpleFeeDistributor
-4. NFTXVaultFactoryUpgradeable
-5. NFTXInventoryStaking
-6. NFTXEligibilityManager
-7. MultiProxyController
-8. NFTXStakingZap, NFTXUnstakingInventoryZap, TimelockExcludeList, NFTXMarketplaceZap
+1. MultiProxyController
+2. StakingTokenProvider
+3. NFTXLPStaking
+4. NFTXSimpleFeeDistributor
+5. NFTXVaultFactoryUpgradeable
+6. NFTXInventoryStaking
+7. NFTXEligibilityManager
+8. NFTXStakingZap, NFTXUnstakingInventoryZap, TimelockExcludeList, NFTXMarketplace0xZap, NFTXVaultCreationZap

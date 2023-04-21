@@ -22,11 +22,11 @@ const config: {
   },
   sepolia: {
     uniLikeExchange: "0x024CE3e12Cb6e5eD0c942D9D3f4F7aeA07239A05", // Sushiswap Factory ["UniswapV2Factory"]
-    defaultPairedtoken: "0xe8188160f0b8e4a2940a6b9779ed0fe9a2506df7", // WETH
+    defaultPairedtoken: "0x16c1038a989E7c52c7B0FBDE889249C02d7e205D", // WETH
     defaultPrefix: "x",
     treasury: "0x000000000000000000000000000000000000dEaD",
-    sushiRouter: "0x1b02dA8Cb0d097eB8D57A175b88c7D8b47997506", // ["UniswapV2Router02"]
-    WETH: "0xe8188160f0b8e4a2940a6b9779ed0fe9a2506df7",
+    sushiRouter: "0x01a93b7153Ee160F3176af0B0F31121DF9f0FFA5", // ["UniswapV2Router02"]
+    WETH: "0x16c1038a989E7c52c7B0FBDE889249C02d7e205D",
     swapTarget: "0x000000000000000000000000000000000000dEaD", // 0x not yet on sepolia
     MultiProxyControllerOwner: "0xDEA9196Dcdd2173D6E369c2AcC0faCc83fD9346a",
   },

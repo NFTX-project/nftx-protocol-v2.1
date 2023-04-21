@@ -47,4 +47,4 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
 };
 export default func;
 func.tags = ["NFTXStakingZap"];
-func.dependencies = ["NFTXVaultFactoryUpgradeable"];
+// func.dependencies = ["NFTXVaultFactoryUpgradeable"]; // commenting out `NFTXVaultFactoryUpgradeable` because the script tries to `execute` its txns as well
