@@ -56,8 +56,8 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
 };
 export default func;
 func.tags = ["NFTXInventoryStaking"];
-func.dependencies = [
-  "NFTXVaultFactoryUpgradeable",
-  "NFTXSimpleFeeDistributor",
-  "MultiProxyController",
-];
+// func.dependencies = [
+//   "NFTXVaultFactoryUpgradeable",
+//   "NFTXSimpleFeeDistributor",
+//   "MultiProxyController",
+// ];
