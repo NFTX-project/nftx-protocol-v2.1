@@ -21,12 +21,12 @@ const config: {
     MultiProxyControllerOwner: "0xDEA9196Dcdd2173D6E369c2AcC0faCc83fD9346a",
   },
   sepolia: {
-    uniLikeExchange: "0x024CE3e12Cb6e5eD0c942D9D3f4F7aeA07239A05", // Sushiswap Factory ["UniswapV2Factory"]
-    defaultPairedtoken: "0x16c1038a989E7c52c7B0FBDE889249C02d7e205D", // WETH
+    uniLikeExchange: "0xbb4B7cf5a75cc2Ac66A03FAC97Af67E8c364B4Cd", // Sushiswap Factory ["UniswapV2Factory"]
+    defaultPairedtoken: "0xfFf9976782d46CC05630D1f6eBAb18b2324d6B14", // WETH
     defaultPrefix: "x",
-    treasury: "0x000000000000000000000000000000000000dEaD",
-    sushiRouter: "0x01a93b7153Ee160F3176af0B0F31121DF9f0FFA5", // ["UniswapV2Router02"]
-    WETH: "0x16c1038a989E7c52c7B0FBDE889249C02d7e205D",
+    treasury: "0xDEA9196Dcdd2173D6E369c2AcC0faCc83fD9346a",
+    sushiRouter: "0xEa8D67a95E1172718CbD601F0742B2ba4E45bC7C", // ["UniswapV2Router02"]
+    WETH: "0xfFf9976782d46CC05630D1f6eBAb18b2324d6B14",
     swapTarget: "0x000000000000000000000000000000000000dEaD", // 0x not yet on sepolia
     MultiProxyControllerOwner: "0xDEA9196Dcdd2173D6E369c2AcC0faCc83fD9346a",
   },

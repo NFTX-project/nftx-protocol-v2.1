@@ -32,6 +32,12 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
     "setInventoryStaking",
     NFTXInventoryStaking.address
   );
+  await execute(
+    "NFTXUnstakingInventoryZap",
+    { from: deployer },
+    "setSushiRouterAndWeth",
+    config.sushiRouter
+  );
 
   // configure other contracts
   await execute(
