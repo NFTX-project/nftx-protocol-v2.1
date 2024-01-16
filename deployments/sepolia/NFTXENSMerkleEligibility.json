@@ -1,0 +1,702 @@
+{
+  "address": "0xf07B4e1f8087Cca6E0b7cE317b1E059DD8b2547a",
+  "abi": [
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "internalType": "bytes32",
+          "name": "merkleRoot",
+          "type": "bytes32"
+        },
+        {
+          "indexed": false,
+          "internalType": "string",
+          "name": "_merkleReference",
+          "type": "string"
+        },
+        {
+          "indexed": false,
+          "internalType": "string",
+          "name": "_merkleLeavesURI",
+          "type": "string"
+        }
+      ],
+      "name": "NFTXEligibilityInit",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "tokenId",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "internalType": "bytes32",
+          "name": "requestId",
+          "type": "bytes32"
+        },
+        {
+          "indexed": false,
+          "internalType": "bool",
+          "name": "isValid",
+          "type": "bool"
+        }
+      ],
+      "name": "PrecursoryCheckComplete",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "tokenId",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "internalType": "bytes32",
+          "name": "requestId",
+          "type": "bytes32"
+        }
+      ],
+      "name": "PrecursoryCheckStarted",
+      "type": "event"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "bytes32",
+          "name": "_merkleRoot",
+          "type": "bytes32"
+        },
+        {
+          "internalType": "string",
+          "name": "_merkleReference",
+          "type": "string"
+        },
+        {
+          "internalType": "string",
+          "name": "_merkleLeavesURI",
+          "type": "string"
+        },
+        {
+          "internalType": "uint256",
+          "name": "_minExpirationTime",
+          "type": "uint256"
+        }
+      ],
+      "name": "__NFTXEligibility_init",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "bytes32",
+          "name": "_merkleRoot",
+          "type": "bytes32"
+        },
+        {
+          "internalType": "string",
+          "name": "_merkleReference",
+          "type": "string"
+        },
+        {
+          "internalType": "string",
+          "name": "_merkleLeavesURI",
+          "type": "string"
+        }
+      ],
+      "name": "__NFTXEligibility_init",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "bytes",
+          "name": "configData",
+          "type": "bytes"
+        }
+      ],
+      "name": "__NFTXEligibility_init_bytes",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256[]",
+          "name": "tokenIds",
+          "type": "uint256[]"
+        }
+      ],
+      "name": "afterMintHook",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256[]",
+          "name": "tokenIds",
+          "type": "uint256[]"
+        }
+      ],
+      "name": "afterRedeemHook",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256[]",
+          "name": "tokenIds",
+          "type": "uint256[]"
+        }
+      ],
+      "name": "beforeMintHook",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256[]",
+          "name": "tokenIds",
+          "type": "uint256[]"
+        }
+      ],
+      "name": "beforeRedeemHook",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256[]",
+          "name": "tokenIds",
+          "type": "uint256[]"
+        }
+      ],
+      "name": "checkAllEligible",
+      "outputs": [
+        {
+          "internalType": "bool",
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256[]",
+          "name": "tokenIds",
+          "type": "uint256[]"
+        }
+      ],
+      "name": "checkAllIneligible",
+      "outputs": [
+        {
+          "internalType": "bool",
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256[]",
+          "name": "tokenIds",
+          "type": "uint256[]"
+        }
+      ],
+      "name": "checkEligible",
+      "outputs": [
+        {
+          "internalType": "bool[]",
+          "name": "",
+          "type": "bool[]"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "tokenId",
+          "type": "uint256"
+        }
+      ],
+      "name": "checkIsEligible",
+      "outputs": [
+        {
+          "internalType": "bool",
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "finalized",
+      "outputs": [
+        {
+          "internalType": "bool",
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "merkleLeavesURI",
+      "outputs": [
+        {
+          "internalType": "string",
+          "name": "",
+          "type": "string"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "merkleReference",
+      "outputs": [
+        {
+          "internalType": "string",
+          "name": "",
+          "type": "string"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "merkleRoot",
+      "outputs": [
+        {
+          "internalType": "bytes32",
+          "name": "",
+          "type": "bytes32"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "minExpirationTime",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "name",
+      "outputs": [
+        {
+          "internalType": "string",
+          "name": "",
+          "type": "string"
+        }
+      ],
+      "stateMutability": "pure",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "tokenId",
+          "type": "uint256"
+        },
+        {
+          "internalType": "bytes32[]",
+          "name": "merkleProof",
+          "type": "bytes32[]"
+        }
+      ],
+      "name": "processToken",
+      "outputs": [
+        {
+          "internalType": "bool",
+          "name": "isValid",
+          "type": "bool"
+        }
+      ],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256[]",
+          "name": "tokenIds",
+          "type": "uint256[]"
+        },
+        {
+          "internalType": "bytes32[][]",
+          "name": "merkleProofs",
+          "type": "bytes32[][]"
+        }
+      ],
+      "name": "processTokens",
+      "outputs": [
+        {
+          "internalType": "bool[]",
+          "name": "",
+          "type": "bool[]"
+        }
+      ],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "tokenId",
+          "type": "uint256"
+        },
+        {
+          "internalType": "bytes32[]",
+          "name": "merkleProof",
+          "type": "bytes32[]"
+        }
+      ],
+      "name": "requiresProcessing",
+      "outputs": [
+        {
+          "internalType": "bool",
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "targetAsset",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "pure",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "bytes32",
+          "name": "",
+          "type": "bytes32"
+        }
+      ],
+      "name": "validTokenHashes",
+      "outputs": [
+        {
+          "internalType": "bool",
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    }
+  ],
+  "transactionHash": "0x54bbcf26950f5ed93b05e672d57f4db165d91301e401ead65c6e338839d2b0d5",
+  "receipt": {
+    "to": null,
+    "from": "0xb06a64615842CbA9b3Bdb7e6F726F3a5BD20daC2",
+    "contractAddress": "0xf07B4e1f8087Cca6E0b7cE317b1E059DD8b2547a",
+    "transactionIndex": 41,
+    "gasUsed": "1207036",
+    "logsBloom": "0x00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+    "blockHash": "0xf1498c37cd0fcbb5a0246015bc3a4ca1555ff239336166a8e0c84a8b33f18b5e",
+    "transactionHash": "0x54bbcf26950f5ed93b05e672d57f4db165d91301e401ead65c6e338839d2b0d5",
+    "logs": [],
+    "blockNumber": 5090201,
+    "cumulativeGasUsed": "4349091",
+    "status": 1,
+    "byzantium": true
+  },
+  "args": [],
+  "numDeployments": 1,
+  "solcInputHash": "90326537966c388ea576f15f0b1836e7",
+  "metadata": "{\"compiler\":{\"version\":\"0.8.4+commit.c7e474f2\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"internalType\":\"bytes32\",\"name\":\"merkleRoot\",\"type\":\"bytes32\"},{\"indexed\":false,\"internalType\":\"string\",\"name\":\"_merkleReference\",\"type\":\"string\"},{\"indexed\":false,\"internalType\":\"string\",\"name\":\"_merkleLeavesURI\",\"type\":\"string\"}],\"name\":\"NFTXEligibilityInit\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"tokenId\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"bytes32\",\"name\":\"requestId\",\"type\":\"bytes32\"},{\"indexed\":false,\"internalType\":\"bool\",\"name\":\"isValid\",\"type\":\"bool\"}],\"name\":\"PrecursoryCheckComplete\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"tokenId\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"bytes32\",\"name\":\"requestId\",\"type\":\"bytes32\"}],\"name\":\"PrecursoryCheckStarted\",\"type\":\"event\"},{\"inputs\":[{\"internalType\":\"bytes32\",\"name\":\"_merkleRoot\",\"type\":\"bytes32\"},{\"internalType\":\"string\",\"name\":\"_merkleReference\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"_merkleLeavesURI\",\"type\":\"string\"},{\"internalType\":\"uint256\",\"name\":\"_minExpirationTime\",\"type\":\"uint256\"}],\"name\":\"__NFTXEligibility_init\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"bytes32\",\"name\":\"_merkleRoot\",\"type\":\"bytes32\"},{\"internalType\":\"string\",\"name\":\"_merkleReference\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"_merkleLeavesURI\",\"type\":\"string\"}],\"name\":\"__NFTXEligibility_init\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"bytes\",\"name\":\"configData\",\"type\":\"bytes\"}],\"name\":\"__NFTXEligibility_init_bytes\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256[]\",\"name\":\"tokenIds\",\"type\":\"uint256[]\"}],\"name\":\"afterMintHook\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256[]\",\"name\":\"tokenIds\",\"type\":\"uint256[]\"}],\"name\":\"afterRedeemHook\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256[]\",\"name\":\"tokenIds\",\"type\":\"uint256[]\"}],\"name\":\"beforeMintHook\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256[]\",\"name\":\"tokenIds\",\"type\":\"uint256[]\"}],\"name\":\"beforeRedeemHook\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256[]\",\"name\":\"tokenIds\",\"type\":\"uint256[]\"}],\"name\":\"checkAllEligible\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256[]\",\"name\":\"tokenIds\",\"type\":\"uint256[]\"}],\"name\":\"checkAllIneligible\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256[]\",\"name\":\"tokenIds\",\"type\":\"uint256[]\"}],\"name\":\"checkEligible\",\"outputs\":[{\"internalType\":\"bool[]\",\"name\":\"\",\"type\":\"bool[]\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"tokenId\",\"type\":\"uint256\"}],\"name\":\"checkIsEligible\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"finalized\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"merkleLeavesURI\",\"outputs\":[{\"internalType\":\"string\",\"name\":\"\",\"type\":\"string\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"merkleReference\",\"outputs\":[{\"internalType\":\"string\",\"name\":\"\",\"type\":\"string\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"merkleRoot\",\"outputs\":[{\"internalType\":\"bytes32\",\"name\":\"\",\"type\":\"bytes32\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"minExpirationTime\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"name\",\"outputs\":[{\"internalType\":\"string\",\"name\":\"\",\"type\":\"string\"}],\"stateMutability\":\"pure\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"tokenId\",\"type\":\"uint256\"},{\"internalType\":\"bytes32[]\",\"name\":\"merkleProof\",\"type\":\"bytes32[]\"}],\"name\":\"processToken\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"isValid\",\"type\":\"bool\"}],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256[]\",\"name\":\"tokenIds\",\"type\":\"uint256[]\"},{\"internalType\":\"bytes32[][]\",\"name\":\"merkleProofs\",\"type\":\"bytes32[][]\"}],\"name\":\"processTokens\",\"outputs\":[{\"internalType\":\"bool[]\",\"name\":\"\",\"type\":\"bool[]\"}],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"tokenId\",\"type\":\"uint256\"},{\"internalType\":\"bytes32[]\",\"name\":\"merkleProof\",\"type\":\"bytes32[]\"}],\"name\":\"requiresProcessing\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"targetAsset\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"pure\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"bytes32\",\"name\":\"\",\"type\":\"bytes32\"}],\"name\":\"validTokenHashes\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"view\",\"type\":\"function\"}],\"devdoc\":{\"author\":\"Twade \",\"kind\":\"dev\",\"methods\":{\"__NFTXEligibility_init(bytes32,string,string)\":{\"params\":{\"_merkleRoot\":\"The root of our merkle tree\"}},\"__NFTXEligibility_init(bytes32,string,string,uint256)\":{\"params\":{\"_merkleLeavesURI\":\"API endpoint providing unencoded JSON array\",\"_merkleReference\":\"Public name of the merkle eligibility implementation\",\"_merkleRoot\":\"The root of our merkle tree\",\"_minExpirationTime\":\"Minimum number of seconds until ENS expiration\"}},\"__NFTXEligibility_init_bytes(bytes)\":{\"params\":{\"configData\":\"Encoded config data\"}},\"finalized()\":{\"returns\":{\"_0\":\"bool\"}},\"name()\":{\"returns\":{\"_0\":\"string\"}},\"processToken(uint256,bytes32[])\":{\"params\":{\"merkleProof\":\"Merkle proof to validate against the tokenId\",\"tokenId\":\"The ENS token ID being validated\"},\"returns\":{\"isValid\":\"If the token is valid\"}},\"processTokens(uint256[],bytes32[][])\":{\"params\":{\"merkleProofs\":\"Merkle proofs to validate against the corresponding tokenId\",\"tokenIds\":\"The ENS token IDs being validated\"},\"returns\":{\"_0\":\"bool[] If the token at the corresponding index is valid\"}},\"requiresProcessing(uint256,bytes32[])\":{\"details\":\"If this returns `true`, `processToken` should subsequently be run before checking the eligibility of the token. \",\"params\":{\"tokenId\":\"The ENS domain token ID\"},\"returns\":{\"_0\":\"bool If the tokenId requires precursory validation\"}},\"targetAsset()\":{\"returns\":{\"_0\":\"address \"}}},\"title\":\"NFTX ENS Merkle Eligibility\",\"version\":1},\"userdoc\":{\"events\":{\"NFTXEligibilityInit(bytes32,string,string)\":{\"notice\":\"Emitted when our NFTX Eligibility is deployed\"},\"PrecursoryCheckComplete(uint256,bytes32,bool)\":{\"notice\":\"Emitted when a project validity check has been completed\"},\"PrecursoryCheckStarted(uint256,bytes32)\":{\"notice\":\"Emitted when a project validity check is started\"}},\"kind\":\"user\",\"methods\":{\"__NFTXEligibility_init(bytes32,string,string)\":{\"notice\":\"Parameters here should mirror the config struct. \"},\"__NFTXEligibility_init(bytes32,string,string,uint256)\":{\"notice\":\"Parameters here should mirror the config struct. \"},\"__NFTXEligibility_init_bytes(bytes)\":{\"notice\":\"Allow our eligibility module to be initialised with optional config data. \"},\"finalized()\":{\"notice\":\"Confirms that our module has been finalised and won't change.\"},\"merkleLeavesURI()\":{\"notice\":\"URI to JSON list of unencoded token IDs\"},\"merkleReference()\":{\"notice\":\"Merkle reference for any required frontend differentiation\"},\"merkleRoot()\":{\"notice\":\"Merkle proof to validate all eligible domains against\"},\"minExpirationTime()\":{\"notice\":\"Minimum expiration time for ENS domains in seconds\"},\"name()\":{\"notice\":\"The name of our Eligibility Module.\"},\"processToken(uint256,bytes32[])\":{\"notice\":\"This will run a precursory check by encoding the token ID, creating the token hash, and then checking this against our merkle tree.\"},\"processTokens(uint256[],bytes32[][])\":{\"notice\":\"This will run a number of precursory checks by encoding the token ID, creating the token hash, and then checking this against our merkle tree.\"},\"requiresProcessing(uint256,bytes32[])\":{\"notice\":\"Checks if the token requires a precursory validation before it can have it's eligibility determined. \"},\"targetAsset()\":{\"notice\":\"The address of our token asset contract.\"},\"validTokenHashes(bytes32)\":{\"notice\":\"Internal storage of valid and processed tokens\"}},\"notice\":\"Allows vaults to be allow eligibility based ENS domains, allowing for minimum expiration times to be set.\",\"version\":1}},\"settings\":{\"compilationTarget\":{\"contracts/solidity/eligibility/NFTXENSMerkleEligibility.sol\":\"NFTXENSMerkleEligibility\"},\"evmVersion\":\"istanbul\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\",\"useLiteralContent\":true},\"optimizer\":{\"enabled\":true,\"runs\":1000},\"remappings\":[]},\"sources\":{\"contracts/solidity/eligibility/NFTXENSMerkleEligibility.sol\":{\"content\":\"// SPDX-License-Identifier: MIT\\n\\npragma solidity ^0.8.0;\\n\\nimport \\\"./NFTXMerkleEligibility.sol\\\";\\n\\n\\nabstract contract ENS {\\n    function nameExpires(uint256 id) public virtual view returns (uint256);\\n}\\n\\n\\n/**\\n * @title NFTX ENS Merkle Eligibility\\n * @author Twade\\n * \\n * @notice Allows vaults to be allow eligibility based ENS domains, allowing for minimum\\n * expiration times to be set.\\n */\\n\\ncontract NFTXENSMerkleEligibility is NFTXMerkleEligibility {\\n\\n    /// @notice Minimum expiration time for ENS domains in seconds\\n    uint public minExpirationTime;\\n\\n\\n    /**\\n     * @notice The name of our Eligibility Module.\\n     *\\n     * @return string\\n     */\\n\\n    function name() public pure override virtual returns (string memory) {    \\n        return 'ENSMerkleEligibility';\\n    }\\n\\n\\n    /**\\n     * @notice The address of our token asset contract.\\n     *\\n     * @return address \\n     */\\n\\n   function targetAsset() public pure override virtual returns (address) {\\n        return 0x57f1887a8BF19b14fC0dF6Fd9B2acc9Af147eA85;\\n    }\\n\\n\\n    /**\\n     * @notice Allow our eligibility module to be initialised with optional\\n     * config data.\\n     * \\n     * @param configData Encoded config data\\n     */\\n\\n    function __NFTXEligibility_init_bytes(bytes memory configData) public override virtual initializer {\\n        (\\n            bytes32 _merkleRoot,\\n            string memory _merkleReference,\\n            string memory _merkleLeavesURI,\\n            uint _minExpirationTime\\n        ) = abi.decode(configData, (bytes32, string, string, uint));\\n\\n        __NFTXEligibility_init(_merkleRoot, _merkleReference, _merkleLeavesURI, _minExpirationTime);\\n    }\\n\\n\\n    /**\\n     * @notice Parameters here should mirror the config struct.\\n     * \\n     * @param _merkleRoot The root of our merkle tree\\n     * @param _merkleReference Public name of the merkle eligibility implementation\\n     * @param _merkleLeavesURI API endpoint providing unencoded JSON array\\n     * @param _minExpirationTime Minimum number of seconds until ENS expiration\\n     */\\n\\n    function __NFTXEligibility_init(\\n        bytes32 _merkleRoot,\\n        string memory _merkleReference,\\n        string memory _merkleLeavesURI,\\n        uint _minExpirationTime\\n    ) public initializer {\\n        super.__NFTXEligibility_init(_merkleRoot, _merkleReference, _merkleLeavesURI);\\n\\n        minExpirationTime = _minExpirationTime;\\n    }\\n\\n\\n    /**\\n     * @notice Checks if a supplied token is eligible; in addition to our core merkle\\n     * eligibility checks we also need to confirm that the ENS domain won't expire within\\n     * a year.\\n     * \\n     * @dev This check requires the token to have already been passed to `processToken`.\\n     *\\n     * @return bool If the tokenId is eligible\\n     */\\n\\n    function _checkIfEligible(uint tokenId) internal view override virtual returns (bool) {\\n    \\t// Get the expiry time of the token ID provided and ensure it has at least\\n    \\t// 365 days left until it expires.\\n    \\tif (block.timestamp + minExpirationTime > ENS(targetAsset()).nameExpires(tokenId)) {\\n    \\t\\treturn false;\\n    \\t}\\n\\n    \\treturn super._checkIfEligible(tokenId);\\n    }\\n\\n}\\n\",\"keccak256\":\"0xe51a6d98756856d065cf24a993b3075dd56f22c93e6ee58df2cf03d5842f65fd\",\"license\":\"MIT\"},\"contracts/solidity/eligibility/NFTXEligibility.sol\":{\"content\":\"// SPDX-License-Identifier: MIT\\n\\npragma solidity ^0.8.0;\\n\\nimport \\\"../proxy/Initializable.sol\\\";\\nimport \\\"../interface/INFTXEligibility.sol\\\";\\n\\n// This is a contract meant to be inherited and overriden to implement eligibility modules. \\nabstract contract NFTXEligibility is INFTXEligibility, Initializable {\\n  function name() public pure override virtual returns (string memory);\\n  function finalized() public view override virtual returns (bool);\\n  function targetAsset() public pure override virtual returns (address);\\n  \\n  function __NFTXEligibility_init_bytes(bytes memory initData) public override virtual;\\n\\n  function checkIsEligible(uint256 tokenId) external view override virtual returns (bool) {\\n      return _checkIfEligible(tokenId);\\n  }\\n\\n  function checkEligible(uint256[] calldata tokenIds) external override virtual view returns (bool[] memory) {\\n      uint256 length = tokenIds.length;\\n      bool[] memory eligibile = new bool[](length);\\n      for (uint256 i; i < length; i++) {\\n          eligibile[i] = _checkIfEligible(tokenIds[i]);\\n      }\\n      return eligibile;\\n  }\\n\\n  function checkAllEligible(uint256[] calldata tokenIds) external override virtual view returns (bool) {\\n      uint256 length = tokenIds.length;\\n      for (uint256 i; i < length; i++) {\\n          // If any are not eligible, end the loop and return false.\\n          if (!_checkIfEligible(tokenIds[i])) {\\n              return false;\\n          }\\n      }\\n      return true;\\n  }\\n\\n  // Checks if all provided NFTs are NOT eligible. This is needed for mint requesting where all NFTs \\n  // provided must be ineligible.\\n  function checkAllIneligible(uint256[] calldata tokenIds) external override virtual view returns (bool) {\\n      uint256 length = tokenIds.length;\\n      for (uint256 i; i < length; i++) {\\n          // If any are eligible, end the loop and return false.\\n          if (_checkIfEligible(tokenIds[i])) {\\n              return false;\\n          }\\n      }\\n      return true;\\n  }\\n\\n  function beforeMintHook(uint256[] calldata tokenIds) external override virtual {}\\n  function afterMintHook(uint256[] calldata tokenIds) external override virtual {}\\n  function beforeRedeemHook(uint256[] calldata tokenIds) external override virtual {}\\n  function afterRedeemHook(uint256[] calldata tokenIds) external override virtual {}\\n\\n  // Override this to implement your module!\\n  function _checkIfEligible(uint256 _tokenId) internal view virtual returns (bool);\\n}\\n\",\"keccak256\":\"0x3997ba7e9f970b2c66dbf97ae374ff9cfc38d8be87a35911df4fa91ad8710360\",\"license\":\"MIT\"},\"contracts/solidity/eligibility/NFTXMerkleEligibility.sol\":{\"content\":\"// SPDX-License-Identifier: MIT\\n\\npragma solidity ^0.8.0;\\n\\nimport \\\"./NFTXEligibility.sol\\\";\\n\\n\\n/**\\n * @dev These functions deal with verification of Merkle Tree proofs.\\n *\\n * The proofs can be generated using the JavaScript library\\n * https://github.com/miguelmota/merkletreejs[merkletreejs].\\n * Note: the hashing algorithm should be keccak256 and pair sorting should be enabled.\\n *\\n * See `test/utils/cryptography/MerkleProof.test.js` for some examples.\\n *\\n * WARNING: You should avoid using leaf values that are 64 bytes long prior to\\n * hashing, or use a hash function other than keccak256 for hashing leaves.\\n * This is because the concatenation of a sorted pair of internal nodes in\\n * the merkle tree could be reinterpreted as a leaf value.\\n */\\n\\nlibrary MerkleProof {\\n    /**\\n     * @dev Returns true if a `leaf` can be proved to be a part of a Merkle tree\\n     * defined by `root`. For this, a `proof` must be provided, containing\\n     * sibling hashes on the branch from the leaf to the root of the tree. Each\\n     * pair of leaves and each pair of pre-images are assumed to be sorted.\\n     */\\n    function verify(\\n        bytes32[] memory proof,\\n        bytes32 root,\\n        bytes32 leaf\\n    ) internal pure returns (bool) {\\n        bytes32 computedHash = leaf;\\n        for (uint i = 0; i < proof.length;) {\\n            computedHash = _hashPair(computedHash, proof[i]);\\n            unchecked { i++; }\\n        }\\n        return computedHash == root;\\n    }\\n\\n    function _hashPair(bytes32 a, bytes32 b) private pure returns (bytes32) {\\n        return a < b ? _efficientHash(a, b) : _efficientHash(b, a);\\n    }\\n\\n    function _efficientHash(bytes32 a, bytes32 b) private pure returns (bytes32 value) {\\n        /// @solidity memory-safe-assembly\\n        assembly {\\n            mstore(0x00, a)\\n            mstore(0x20, b)\\n            value := keccak256(0x00, 0x40)\\n        }\\n    }\\n}\\n\\n\\n/**\\n * @title NFTX Merkle Eligibility\\n * @author Twade\\n * \\n * @notice Allows vaults to be allow eligibility based on a predefined merkle tree.\\n */\\n\\nabstract contract NFTXMerkleEligibility is NFTXEligibility {\\n\\n    /// @notice Emitted when our NFTX Eligibility is deployed\\n    event NFTXEligibilityInit(bytes32 merkleRoot, string _merkleReference, string _merkleLeavesURI);\\n\\n    /// @notice Emitted when a project validity check is started\\n    event PrecursoryCheckStarted(uint tokenId, bytes32 requestId);\\n\\n    /// @notice Emitted when a project validity check has been completed\\n    event PrecursoryCheckComplete(uint tokenId, bytes32 requestId, bool isValid);\\n\\n    /// @notice Internal storage of valid and processed tokens\\n    mapping(bytes32 => bool) public validTokenHashes;\\n    mapping(bytes32 => mapping(bytes32 => bool)) private _processedTokenHashes;\\n\\n    /// @notice Merkle proof to validate all eligible domains against\\n    bytes32 public merkleRoot;\\n\\n    /// @notice Merkle reference for any required frontend differentiation\\n    string public merkleReference;\\n\\n    /// @notice URI to JSON list of unencoded token IDs\\n    string public merkleLeavesURI;\\n\\n\\n    /**\\n     * @notice The name of our Eligibility Module.\\n     *\\n     * @return string\\n     */\\n\\n    function name() public pure override virtual returns (string memory) {}\\n\\n\\n    /**\\n     * @notice Confirms that our module has been finalised and won't change.\\n     *\\n     * @return bool\\n     */\\n\\n    function finalized() public view override virtual returns (bool) {    \\n        return true;\\n    }\\n\\n\\n    /**\\n     * @notice The address of our token asset contract.\\n     *\\n     * @return address \\n     */\\n\\n   function targetAsset() public pure override virtual returns (address) {}\\n\\n\\n    /**\\n     * @notice Allow our eligibility module to be initialised with optional\\n     * config data.\\n     * \\n     * @param configData Encoded config data\\n     */\\n\\n    function __NFTXEligibility_init_bytes(bytes memory configData) public override virtual initializer {\\n        (\\n            bytes32 _merkleRoot,\\n            string memory _merkleReference,\\n            string memory _merkleLeavesURI\\n        ) = abi.decode(configData, (bytes32, string, string));\\n\\n        __NFTXEligibility_init(_merkleRoot, _merkleReference, _merkleLeavesURI);\\n    }\\n\\n\\n    /**\\n     * @notice Parameters here should mirror the config struct.\\n     * \\n     * @param _merkleRoot The root of our merkle tree\\n     */\\n\\n    function __NFTXEligibility_init(bytes32 _merkleRoot, string memory _merkleReference, string memory _merkleLeavesURI) public initializer {\\n        merkleRoot = _merkleRoot;\\n        merkleReference = _merkleReference;\\n        merkleLeavesURI = _merkleLeavesURI;\\n\\n        emit NFTXEligibilityInit(_merkleRoot, _merkleReference, _merkleLeavesURI);\\n    }\\n\\n\\n    /**\\n     * @notice Checks if a supplied token is eligible, which is defined by our merkle\\n     * tree root assigned at initialisation.\\n     * \\n     * @dev This check requires the token to have already been passed to `processToken`.\\n     *\\n     * @return bool If the tokenId is eligible\\n     */\\n\\n    function _checkIfEligible(uint tokenId) internal view override virtual returns (bool) {\\n        return validTokenHashes[_hashTokenId(tokenId)];\\n    }\\n\\n\\n    /**\\n     * @notice Checks if the token requires a precursory validation before it can have\\n     * it's eligibility determined.\\n     * \\n     * @dev If this returns `true`, `processToken` should subsequently be run before\\n     * checking the eligibility of the token.\\n     * \\n     * @param tokenId The ENS domain token ID\\n     *\\n     * @return bool If the tokenId requires precursory validation\\n     */\\n\\n    function requiresProcessing(uint tokenId, bytes32[] calldata merkleProof) public view returns (bool) {\\n        // Check if we have a confirmed processing log\\n        return !_processedTokenHashes[_hashTokenId(tokenId)][_hashMerkleProof(merkleProof)];\\n    }\\n\\n\\n    /**\\n     * @notice This will run a number of precursory checks by encoding the token ID,\\n     * creating the token hash, and then checking this against our merkle tree.\\n     *\\n     * @param tokenIds The ENS token IDs being validated\\n     * @param merkleProofs Merkle proofs to validate against the corresponding tokenId\\n     *\\n     * @return bool[] If the token at the corresponding index is valid\\n     */\\n\\n    function processTokens(uint[] calldata tokenIds, bytes32[][] calldata merkleProofs) public returns (bool[] memory) {\\n        // Iterate over our process tokens\\n        uint numberOfTokens = tokenIds.length;\\n        bool[] memory isValid = new bool[](numberOfTokens);\\n\\n        // Loop through and process our tokens\\n        for (uint i; i < numberOfTokens;) {\\n            isValid[i] = processToken(tokenIds[i], merkleProofs[i]);\\n            unchecked { ++i; }\\n        }\\n\\n        return isValid;\\n    }\\n\\n\\n    /**\\n     * @notice This will run a precursory check by encoding the token ID, creating the\\n     * token hash, and then checking this against our merkle tree.\\n     *\\n     * @param tokenId The ENS token ID being validated\\n     * @param merkleProof Merkle proof to validate against the tokenId\\n     *\\n     * @return isValid If the token is valid\\n     */\\n\\n    function processToken(uint tokenId, bytes32[] calldata merkleProof) public returns (bool isValid) {\\n        // If the token has already been processed, just return the validity\\n        if (!requiresProcessing(tokenId, merkleProof)) {\\n            return _checkIfEligible(tokenId);\\n        }\\n\\n    \\t// Get the hashed equivalent of our tokenId\\n    \\tbytes32 tokenHash = _hashTokenId(tokenId);\\n\\n    \\t// Determine if our domain is eligible by traversing our merkle tree\\n    \\tisValid = MerkleProof.verify(merkleProof, merkleRoot, tokenHash);\\n\\n        // Update our token eligibility _only_ if we have been able to confirm that\\n        // it is eligible. This prevents incorrect proofs from bricking a token.\\n        if (isValid) {\\n            validTokenHashes[tokenHash] = isValid;\\n        }\\n\\n        // Confirm that this has been processed\\n        _processedTokenHashes[tokenHash][_hashMerkleProof(merkleProof)] = true;\\n    }\\n\\n\\n    /**\\n     * @notice Hashes the token ID to convert it into the token hash.\\n     *\\n     * @param tokenId The ENS token ID being hashed\\n     *\\n     * @return bytes32 The encrypted token hash\\n     */\\n\\n    function _hashTokenId(uint tokenId) private pure returns (bytes32) {\\n        return keccak256(_tokenString(tokenId));\\n    }\\n\\n\\n    /**\\n     * @notice This will convert a 2d bytes32 array into a bytes32 hash.\\n     *\\n     * @param merkleProofs Merkle proof to encrypted\\n     *\\n     * @return bytes32 The hashed merkle proof\\n     */\\n\\n    function _hashMerkleProof(bytes32[] memory merkleProofs) private pure returns (bytes32) {\\n        return keccak256(abi.encodePacked(merkleProofs));\\n    }\\n\\n\\n    /**\\n     * @notice Converts a `uint256` to its ASCII `string` decimal representation.\\n     * \\n     * @param value Integer value\\n     * \\n     * @return string String of the integer value\\n     */\\n\\n    function _tokenString(uint256 value) internal pure returns (bytes memory) {\\n        if (value == 0) {\\n            return \\\"0\\\";\\n        }\\n\\n        uint256 temp = value;\\n        uint256 digits;\\n\\n        while (temp != 0) {\\n            unchecked { ++digits; }\\n            temp /= 10;\\n        }\\n\\n        bytes memory buffer = new bytes(digits);\\n\\n        while (value != 0) {\\n            digits -= 1;\\n            buffer[digits] = bytes1(uint8(48 + uint256(value % 10)));\\n            value /= 10;\\n        }\\n\\n        return buffer;\\n    }\\n\\n}\\n\",\"keccak256\":\"0xd5b3f2404cdc38be3ccdad86084030d685e25f0883c0dfefc214032d32877207\",\"license\":\"MIT\"},\"contracts/solidity/interface/INFTXEligibility.sol\":{\"content\":\"// SPDX-License-Identifier: MIT\\n\\npragma solidity ^0.8.0;\\n\\ninterface INFTXEligibility {\\n    // Read functions.\\n    function name() external pure returns (string memory);\\n\\n    function finalized() external view returns (bool);\\n\\n    function targetAsset() external pure returns (address);\\n\\n    function checkAllEligible(uint256[] calldata tokenIds)\\n        external\\n        view\\n        returns (bool);\\n\\n    function checkEligible(uint256[] calldata tokenIds)\\n        external\\n        view\\n        returns (bool[] memory);\\n\\n    function checkAllIneligible(uint256[] calldata tokenIds)\\n        external\\n        view\\n        returns (bool);\\n\\n    function checkIsEligible(uint256 tokenId) external view returns (bool);\\n\\n    // Write functions.\\n    function __NFTXEligibility_init_bytes(bytes calldata configData) external;\\n\\n    function beforeMintHook(uint256[] calldata tokenIds) external;\\n\\n    function afterMintHook(uint256[] calldata tokenIds) external;\\n\\n    function beforeRedeemHook(uint256[] calldata tokenIds) external;\\n\\n    function afterRedeemHook(uint256[] calldata tokenIds) external;\\n}\\n\",\"keccak256\":\"0xd932fdc4ea04b9d685f094b4405e64da8f3ab46cd701b22223f2a28d42973c70\",\"license\":\"MIT\"},\"contracts/solidity/proxy/Initializable.sol\":{\"content\":\"// SPDX-License-Identifier: MIT\\n\\n// solhint-disable-next-line compiler-version\\npragma solidity ^0.8.0;\\n\\n/**\\n * @dev This is a base contract to aid in writing upgradeable contracts, or any kind of contract that will be deployed\\n * behind a proxy. Since a proxied contract can't have a constructor, it's common to move constructor logic to an\\n * external initializer function, usually called `initialize`. It then becomes necessary to protect this initializer\\n * function so it can only be called once. The {initializer} modifier provided by this contract will have this effect.\\n *\\n * TIP: To avoid leaving the proxy in an uninitialized state, the initializer function should be called as early as\\n * possible by providing the encoded function call as the `_data` argument to {ERC1967Proxy-constructor}.\\n *\\n * CAUTION: When used with inheritance, manual care must be taken to not invoke a parent initializer twice, or to ensure\\n * that all initializers are idempotent. This is not verified automatically as constructors are by Solidity.\\n */\\nabstract contract Initializable {\\n    /**\\n     * @dev Indicates that the contract has been initialized.\\n     */\\n    bool private _initialized;\\n\\n    /**\\n     * @dev Indicates that the contract is in the process of being initialized.\\n     */\\n    bool private _initializing;\\n\\n    /**\\n     * @dev Modifier to protect an initializer function from being invoked twice.\\n     */\\n    modifier initializer() {\\n        require(\\n            _initializing || !_initialized,\\n            \\\"Initializable: contract is already initialized\\\"\\n        );\\n\\n        bool isTopLevelCall = !_initializing;\\n        if (isTopLevelCall) {\\n            _initializing = true;\\n            _initialized = true;\\n        }\\n\\n        _;\\n\\n        if (isTopLevelCall) {\\n            _initializing = false;\\n        }\\n    }\\n}\\n\",\"keccak256\":\"0x04ad3c77a6a5006b66f1642cc3353b8009215d734eb80f069ed42a6c09460391\",\"license\":\"MIT\"}},\"version\":1}",
+  "bytecode": "0x608060405234801561001057600080fd5b506114e3806100206000396000f3fe608060405234801561001057600080fd5b50600436106101825760003560e01c806383033818116100d8578063b3f05b971161008c578063ca373f2811610066578063ca373f2814610304578063d2a096e814610317578063f3c6ce7a1461032a57600080fd5b8063b3f05b97146102ea578063bd8affde146101f2578063c5fa1375146102f157600080fd5b806390541ed5116100bd57806390541ed5146102a1578063a25a38ed146102b4578063afeaaf4b146102d757600080fd5b8063830338181461026b57806384ca9f851461028e57600080fd5b80633eea06d41161013a5780635e2f9b52116101145780635e2f9b52146101f25780636c47d595146101f25780636cd912601461024b57600080fd5b80633eea06d4146102285780634998b7f3146102305780635b88331e1461024357600080fd5b806331b412d71161016b57806331b412d7146101e957806336eb0862146101f25780633d4403ac1461020657600080fd5b806306fdde03146101875780632eb4a7ab146101d2575b600080fd5b60408051808201909152601481527f454e534d65726b6c65456c69676962696c69747900000000000000000000000060208201525b6040516101c991906112de565b60405180910390f35b6101db60035481565b6040519081526020016101c9565b6101db60065481565b610204610200366004610f4a565b5050565b005b6040517357f1887a8bf19b14fc0df6fd9b2acc9af147ea8581526020016101c9565b6101bc61033d565b61020461023e366004611159565b6103cb565b6101bc6104b5565b61025e610259366004610f4a565b6104c2565b6040516101c99190611263565b61027e6102793660046111b7565b6105a1565b60405190151581526020016101c9565b61027e61029c366004610f4a565b61061b565b6102046102af366004611075565b610677565b61027e6102c2366004610ff3565b60016020526000908152604090205460ff1681565b61025e6102e5366004610f8a565b61073e565b600161027e565b61027e6102ff3660046111b7565b610840565b61027e610312366004610f4a565b61094c565b61027e610325366004610ff3565b61099e565b61020461033836600461100b565b6109a9565b6004805461034a90611401565b80601f016020809104026020016040519081016040528092919081815260200182805461037690611401565b80156103c35780601f10610398576101008083540402835291602001916103c3565b820191906000526020600020905b8154815290600101906020018083116103a657829003601f168201915b505050505081565b600054610100900460ff16806103e4575060005460ff16155b61044c5760405162461bcd60e51b815260206004820152602e60248201527f496e697469616c697a61626c653a20636f6e747261637420697320616c72656160448201526d191e481a5b9a5d1a585b1a5e995960921b60648201526084015b60405180910390fd5b600054610100900460ff1615801561046e576000805461ffff19166101011790555b6000806000808580602001905181019061048891906110e7565b935093509350935061049c84848484610677565b505050508015610200576000805461ff00191690555050565b6005805461034a90611401565b60608160008167ffffffffffffffff8111156104ee57634e487b7160e01b600052604160045260246000fd5b604051908082528060200260200182016040528015610517578160200160208202803683370190505b50905060005b828110156105965761055486868381811061054857634e487b7160e01b600052603260045260246000fd5b90506020020135610ac7565b82828151811061057457634e487b7160e01b600052603260045260246000fd5b911515602092830291909101909101528061058e8161143c565b91505061051d565b509150505b92915050565b6000600260006105b086610b8a565b815260200190815260200160002060006105fc858580806020026020016040519081016040528093929190818152602001838360200280828437600092019190915250610ba392505050565b815260208101919091526040016000205460ff161590505b9392505050565b600081815b8181101561066c5761064b85858381811061054857634e487b7160e01b600052603260045260246000fd5b61065a5760009250505061059b565b806106648161143c565b915050610620565b506001949350505050565b600054610100900460ff1680610690575060005460ff16155b6106f35760405162461bcd60e51b815260206004820152602e60248201527f496e697469616c697a61626c653a20636f6e747261637420697320616c72656160448201526d191e481a5b9a5d1a585b1a5e995960921b6064820152608401610443565b600054610100900460ff16158015610715576000805461ffff19166101011790555b6107208585856109a9565b60068290558015610737576000805461ff00191690555b5050505050565b60608360008167ffffffffffffffff81111561076a57634e487b7160e01b600052604160045260246000fd5b604051908082528060200260200182016040528015610793578160200160208202803683370190505b50905060005b82811015610835576107fd8888838181106107c457634e487b7160e01b600052603260045260246000fd5b905060200201358787848181106107eb57634e487b7160e01b600052603260045260246000fd5b90506020028101906102ff91906112f1565b82828151811061081d57634e487b7160e01b600052603260045260246000fd5b91151560209283029190910190910152600101610799565b509695505050505050565b600061084d8484846105a1565b6108615761085a84610ac7565b9050610614565b600061086c85610b8a565b90506108af848480806020026020016040519081016040528093929190818152602001838360200280828437600092019190915250506003549150849050610bd3565b915081156108d2576000818152600160205260409020805460ff19168315151790555b6001600260008381526020019081526020016000206000610925878780806020026020016040519081016040528093929190818152602001838360200280828437600092019190915250610ba392505050565b81526020810191909152604001600020805460ff1916911515919091179055509392505050565b600081815b8181101561066c5761097c85858381811061054857634e487b7160e01b600052603260045260246000fd5b1561098c5760009250505061059b565b806109968161143c565b915050610951565b600061059b82610ac7565b600054610100900460ff16806109c2575060005460ff16155b610a255760405162461bcd60e51b815260206004820152602e60248201527f496e697469616c697a61626c653a20636f6e747261637420697320616c72656160448201526d191e481a5b9a5d1a585b1a5e995960921b6064820152608401610443565b600054610100900460ff16158015610a47576000805461ffff19166101011790555b60038490558251610a5f906004906020860190610dc7565b508151610a73906005906020850190610dc7565b507feaccdf52e14d5053012b2bacdc83bfc609cca17cd4b8843968b9ab7f41eb6841848484604051610aa7939291906112a9565b60405180910390a18015610ac1576000805461ff00191690555b50505050565b6040517fd6e4fa86000000000000000000000000000000000000000000000000000000008152600481018290526000907357f1887a8bf19b14fc0df6fd9b2acc9af147ea859063d6e4fa869060240160206040518083038186803b158015610b2e57600080fd5b505afa158015610b42573d6000803e3d6000fd5b505050506040513d601f19601f82011682018060405250810190610b66919061119f565b600654610b739042611392565b1115610b8157506000919050565b61059b82610c27565b6000610b9582610c50565b805190602001209050919050565b600081604051602001610bb6919061122d565b604051602081830303815290604052805190602001209050919050565b600081815b8551811015610c1c57610c1282878381518110610c0557634e487b7160e01b600052603260045260246000fd5b6020026020010151610d9b565b9150600101610bd8565b509092149392505050565b600060016000610c3684610b8a565b815260208101919091526040016000205460ff1692915050565b606081610c9057505060408051808201909152600181527f3000000000000000000000000000000000000000000000000000000000000000602082015290565b8160005b8115610caf57600101610ca8600a836113aa565b9150610c94565b60008167ffffffffffffffff811115610cd857634e487b7160e01b600052604160045260246000fd5b6040519080825280601f01601f191660200182016040528015610d02576020820181803683370190505b5090505b8415610d9357610d176001836113be565b9150610d24600a86611457565b610d2f906030611392565b60f81b818381518110610d5257634e487b7160e01b600052603260045260246000fd5b60200101907effffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff1916908160001a905350610d8c600a866113aa565b9450610d06565b949350505050565b6000818310610db7576000828152602084905260409020610614565b5060009182526020526040902090565b828054610dd390611401565b90600052602060002090601f016020900481019282610df55760008555610e3b565b82601f10610e0e57805160ff1916838001178555610e3b565b82800160010185558215610e3b579182015b82811115610e3b578251825591602001919060010190610e20565b50610e47929150610e4b565b5090565b5b80821115610e475760008155600101610e4c565b6000610e73610e6e8461136a565b611339565b9050828152838383011115610e8757600080fd5b828260208301376000602084830101529392505050565b60008083601f840112610eaf578182fd5b50813567ffffffffffffffff811115610ec6578182fd5b6020830191508360208260051b8501011115610ee157600080fd5b9250929050565b600082601f830112610ef8578081fd5b61061483833560208501610e60565b600082601f830112610f17578081fd5b8151610f25610e6e8261136a565b818152846020838601011115610f39578283fd5b610d938260208301602087016113d5565b60008060208385031215610f5c578182fd5b823567ffffffffffffffff811115610f72578283fd5b610f7e85828601610e9e565b90969095509350505050565b60008060008060408587031215610f9f578182fd5b843567ffffffffffffffff80821115610fb6578384fd5b610fc288838901610e9e565b90965094506020870135915080821115610fda578384fd5b50610fe787828801610e9e565b95989497509550505050565b600060208284031215611004578081fd5b5035919050565b60008060006060848603121561101f578283fd5b83359250602084013567ffffffffffffffff8082111561103d578384fd5b61104987838801610ee8565b9350604086013591508082111561105e578283fd5b5061106b86828701610ee8565b9150509250925092565b6000806000806080858703121561108a578384fd5b84359350602085013567ffffffffffffffff808211156110a8578485fd5b6110b488838901610ee8565b945060408701359150808211156110c9578384fd5b506110d687828801610ee8565b949793965093946060013593505050565b600080600080608085870312156110fc578384fd5b84519350602085015167ffffffffffffffff8082111561111a578485fd5b61112688838901610f07565b9450604087015191508082111561113b578384fd5b5061114887828801610f07565b606096909601519497939650505050565b60006020828403121561116a578081fd5b813567ffffffffffffffff811115611180578182fd5b8201601f81018413611190578182fd5b610d9384823560208401610e60565b6000602082840312156111b0578081fd5b5051919050565b6000806000604084860312156111cb578283fd5b83359250602084013567ffffffffffffffff8111156111e8578283fd5b6111f486828701610e9e565b9497909650939450505050565b600081518084526112198160208601602086016113d5565b601f01601f19169290920160200192915050565b815160009082906020808601845b838110156112575781518552938201939082019060010161123b565b50929695505050505050565b6020808252825182820181905260009190848201906040850190845b8181101561129d57835115158352928401929184019160010161127f565b50909695505050505050565b8381526060602082015260006112c26060830185611201565b82810360408401526112d48185611201565b9695505050505050565b6020815260006106146020830184611201565b6000808335601e19843603018112611307578283fd5b83018035915067ffffffffffffffff821115611321578283fd5b6020019150600581901b3603821315610ee157600080fd5b604051601f8201601f1916810167ffffffffffffffff8111828210171561136257611362611497565b604052919050565b600067ffffffffffffffff82111561138457611384611497565b50601f01601f191660200190565b600082198211156113a5576113a561146b565b500190565b6000826113b9576113b9611481565b500490565b6000828210156113d0576113d061146b565b500390565b60005b838110156113f05781810151838201526020016113d8565b83811115610ac15750506000910152565b600181811c9082168061141557607f821691505b6020821081141561143657634e487b7160e01b600052602260045260246000fd5b50919050565b60006000198214156114505761145061146b565b5060010190565b60008261146657611466611481565b500690565b634e487b7160e01b600052601160045260246000fd5b634e487b7160e01b600052601260045260246000fd5b634e487b7160e01b600052604160045260246000fdfea26469706673582212209c62d6952f5684ac8226f1300596147162cb660f7cdf349b308e8073cc7a227a64736f6c63430008040033",
+  "deployedBytecode": "0x608060405234801561001057600080fd5b50600436106101825760003560e01c806383033818116100d8578063b3f05b971161008c578063ca373f2811610066578063ca373f2814610304578063d2a096e814610317578063f3c6ce7a1461032a57600080fd5b8063b3f05b97146102ea578063bd8affde146101f2578063c5fa1375146102f157600080fd5b806390541ed5116100bd57806390541ed5146102a1578063a25a38ed146102b4578063afeaaf4b146102d757600080fd5b8063830338181461026b57806384ca9f851461028e57600080fd5b80633eea06d41161013a5780635e2f9b52116101145780635e2f9b52146101f25780636c47d595146101f25780636cd912601461024b57600080fd5b80633eea06d4146102285780634998b7f3146102305780635b88331e1461024357600080fd5b806331b412d71161016b57806331b412d7146101e957806336eb0862146101f25780633d4403ac1461020657600080fd5b806306fdde03146101875780632eb4a7ab146101d2575b600080fd5b60408051808201909152601481527f454e534d65726b6c65456c69676962696c69747900000000000000000000000060208201525b6040516101c991906112de565b60405180910390f35b6101db60035481565b6040519081526020016101c9565b6101db60065481565b610204610200366004610f4a565b5050565b005b6040517357f1887a8bf19b14fc0df6fd9b2acc9af147ea8581526020016101c9565b6101bc61033d565b61020461023e366004611159565b6103cb565b6101bc6104b5565b61025e610259366004610f4a565b6104c2565b6040516101c99190611263565b61027e6102793660046111b7565b6105a1565b60405190151581526020016101c9565b61027e61029c366004610f4a565b61061b565b6102046102af366004611075565b610677565b61027e6102c2366004610ff3565b60016020526000908152604090205460ff1681565b61025e6102e5366004610f8a565b61073e565b600161027e565b61027e6102ff3660046111b7565b610840565b61027e610312366004610f4a565b61094c565b61027e610325366004610ff3565b61099e565b61020461033836600461100b565b6109a9565b6004805461034a90611401565b80601f016020809104026020016040519081016040528092919081815260200182805461037690611401565b80156103c35780601f10610398576101008083540402835291602001916103c3565b820191906000526020600020905b8154815290600101906020018083116103a657829003601f168201915b505050505081565b600054610100900460ff16806103e4575060005460ff16155b61044c5760405162461bcd60e51b815260206004820152602e60248201527f496e697469616c697a61626c653a20636f6e747261637420697320616c72656160448201526d191e481a5b9a5d1a585b1a5e995960921b60648201526084015b60405180910390fd5b600054610100900460ff1615801561046e576000805461ffff19166101011790555b6000806000808580602001905181019061048891906110e7565b935093509350935061049c84848484610677565b505050508015610200576000805461ff00191690555050565b6005805461034a90611401565b60608160008167ffffffffffffffff8111156104ee57634e487b7160e01b600052604160045260246000fd5b604051908082528060200260200182016040528015610517578160200160208202803683370190505b50905060005b828110156105965761055486868381811061054857634e487b7160e01b600052603260045260246000fd5b90506020020135610ac7565b82828151811061057457634e487b7160e01b600052603260045260246000fd5b911515602092830291909101909101528061058e8161143c565b91505061051d565b509150505b92915050565b6000600260006105b086610b8a565b815260200190815260200160002060006105fc858580806020026020016040519081016040528093929190818152602001838360200280828437600092019190915250610ba392505050565b815260208101919091526040016000205460ff161590505b9392505050565b600081815b8181101561066c5761064b85858381811061054857634e487b7160e01b600052603260045260246000fd5b61065a5760009250505061059b565b806106648161143c565b915050610620565b506001949350505050565b600054610100900460ff1680610690575060005460ff16155b6106f35760405162461bcd60e51b815260206004820152602e60248201527f496e697469616c697a61626c653a20636f6e747261637420697320616c72656160448201526d191e481a5b9a5d1a585b1a5e995960921b6064820152608401610443565b600054610100900460ff16158015610715576000805461ffff19166101011790555b6107208585856109a9565b60068290558015610737576000805461ff00191690555b5050505050565b60608360008167ffffffffffffffff81111561076a57634e487b7160e01b600052604160045260246000fd5b604051908082528060200260200182016040528015610793578160200160208202803683370190505b50905060005b82811015610835576107fd8888838181106107c457634e487b7160e01b600052603260045260246000fd5b905060200201358787848181106107eb57634e487b7160e01b600052603260045260246000fd5b90506020028101906102ff91906112f1565b82828151811061081d57634e487b7160e01b600052603260045260246000fd5b91151560209283029190910190910152600101610799565b509695505050505050565b600061084d8484846105a1565b6108615761085a84610ac7565b9050610614565b600061086c85610b8a565b90506108af848480806020026020016040519081016040528093929190818152602001838360200280828437600092019190915250506003549150849050610bd3565b915081156108d2576000818152600160205260409020805460ff19168315151790555b6001600260008381526020019081526020016000206000610925878780806020026020016040519081016040528093929190818152602001838360200280828437600092019190915250610ba392505050565b81526020810191909152604001600020805460ff1916911515919091179055509392505050565b600081815b8181101561066c5761097c85858381811061054857634e487b7160e01b600052603260045260246000fd5b1561098c5760009250505061059b565b806109968161143c565b915050610951565b600061059b82610ac7565b600054610100900460ff16806109c2575060005460ff16155b610a255760405162461bcd60e51b815260206004820152602e60248201527f496e697469616c697a61626c653a20636f6e747261637420697320616c72656160448201526d191e481a5b9a5d1a585b1a5e995960921b6064820152608401610443565b600054610100900460ff16158015610a47576000805461ffff19166101011790555b60038490558251610a5f906004906020860190610dc7565b508151610a73906005906020850190610dc7565b507feaccdf52e14d5053012b2bacdc83bfc609cca17cd4b8843968b9ab7f41eb6841848484604051610aa7939291906112a9565b60405180910390a18015610ac1576000805461ff00191690555b50505050565b6040517fd6e4fa86000000000000000000000000000000000000000000000000000000008152600481018290526000907357f1887a8bf19b14fc0df6fd9b2acc9af147ea859063d6e4fa869060240160206040518083038186803b158015610b2e57600080fd5b505afa158015610b42573d6000803e3d6000fd5b505050506040513d601f19601f82011682018060405250810190610b66919061119f565b600654610b739042611392565b1115610b8157506000919050565b61059b82610c27565b6000610b9582610c50565b805190602001209050919050565b600081604051602001610bb6919061122d565b604051602081830303815290604052805190602001209050919050565b600081815b8551811015610c1c57610c1282878381518110610c0557634e487b7160e01b600052603260045260246000fd5b6020026020010151610d9b565b9150600101610bd8565b509092149392505050565b600060016000610c3684610b8a565b815260208101919091526040016000205460ff1692915050565b606081610c9057505060408051808201909152600181527f3000000000000000000000000000000000000000000000000000000000000000602082015290565b8160005b8115610caf57600101610ca8600a836113aa565b9150610c94565b60008167ffffffffffffffff811115610cd857634e487b7160e01b600052604160045260246000fd5b6040519080825280601f01601f191660200182016040528015610d02576020820181803683370190505b5090505b8415610d9357610d176001836113be565b9150610d24600a86611457565b610d2f906030611392565b60f81b818381518110610d5257634e487b7160e01b600052603260045260246000fd5b60200101907effffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff1916908160001a905350610d8c600a866113aa565b9450610d06565b949350505050565b6000818310610db7576000828152602084905260409020610614565b5060009182526020526040902090565b828054610dd390611401565b90600052602060002090601f016020900481019282610df55760008555610e3b565b82601f10610e0e57805160ff1916838001178555610e3b565b82800160010185558215610e3b579182015b82811115610e3b578251825591602001919060010190610e20565b50610e47929150610e4b565b5090565b5b80821115610e475760008155600101610e4c565b6000610e73610e6e8461136a565b611339565b9050828152838383011115610e8757600080fd5b828260208301376000602084830101529392505050565b60008083601f840112610eaf578182fd5b50813567ffffffffffffffff811115610ec6578182fd5b6020830191508360208260051b8501011115610ee157600080fd5b9250929050565b600082601f830112610ef8578081fd5b61061483833560208501610e60565b600082601f830112610f17578081fd5b8151610f25610e6e8261136a565b818152846020838601011115610f39578283fd5b610d938260208301602087016113d5565b60008060208385031215610f5c578182fd5b823567ffffffffffffffff811115610f72578283fd5b610f7e85828601610e9e565b90969095509350505050565b60008060008060408587031215610f9f578182fd5b843567ffffffffffffffff80821115610fb6578384fd5b610fc288838901610e9e565b90965094506020870135915080821115610fda578384fd5b50610fe787828801610e9e565b95989497509550505050565b600060208284031215611004578081fd5b5035919050565b60008060006060848603121561101f578283fd5b83359250602084013567ffffffffffffffff8082111561103d578384fd5b61104987838801610ee8565b9350604086013591508082111561105e578283fd5b5061106b86828701610ee8565b9150509250925092565b6000806000806080858703121561108a578384fd5b84359350602085013567ffffffffffffffff808211156110a8578485fd5b6110b488838901610ee8565b945060408701359150808211156110c9578384fd5b506110d687828801610ee8565b949793965093946060013593505050565b600080600080608085870312156110fc578384fd5b84519350602085015167ffffffffffffffff8082111561111a578485fd5b61112688838901610f07565b9450604087015191508082111561113b578384fd5b5061114887828801610f07565b606096909601519497939650505050565b60006020828403121561116a578081fd5b813567ffffffffffffffff811115611180578182fd5b8201601f81018413611190578182fd5b610d9384823560208401610e60565b6000602082840312156111b0578081fd5b5051919050565b6000806000604084860312156111cb578283fd5b83359250602084013567ffffffffffffffff8111156111e8578283fd5b6111f486828701610e9e565b9497909650939450505050565b600081518084526112198160208601602086016113d5565b601f01601f19169290920160200192915050565b815160009082906020808601845b838110156112575781518552938201939082019060010161123b565b50929695505050505050565b6020808252825182820181905260009190848201906040850190845b8181101561129d57835115158352928401929184019160010161127f565b50909695505050505050565b8381526060602082015260006112c26060830185611201565b82810360408401526112d48185611201565b9695505050505050565b6020815260006106146020830184611201565b6000808335601e19843603018112611307578283fd5b83018035915067ffffffffffffffff821115611321578283fd5b6020019150600581901b3603821315610ee157600080fd5b604051601f8201601f1916810167ffffffffffffffff8111828210171561136257611362611497565b604052919050565b600067ffffffffffffffff82111561138457611384611497565b50601f01601f191660200190565b600082198211156113a5576113a561146b565b500190565b6000826113b9576113b9611481565b500490565b6000828210156113d0576113d061146b565b500390565b60005b838110156113f05781810151838201526020016113d8565b83811115610ac15750506000910152565b600181811c9082168061141557607f821691505b6020821081141561143657634e487b7160e01b600052602260045260246000fd5b50919050565b60006000198214156114505761145061146b565b5060010190565b60008261146657611466611481565b500690565b634e487b7160e01b600052601160045260246000fd5b634e487b7160e01b600052601260045260246000fd5b634e487b7160e01b600052604160045260246000fdfea26469706673582212209c62d6952f5684ac8226f1300596147162cb660f7cdf349b308e8073cc7a227a64736f6c63430008040033",
+  "devdoc": {
+    "author": "Twade ",
+    "kind": "dev",
+    "methods": {
+      "__NFTXEligibility_init(bytes32,string,string)": {
+        "params": {
+          "_merkleRoot": "The root of our merkle tree"
+        }
+      },
+      "__NFTXEligibility_init(bytes32,string,string,uint256)": {
+        "params": {
+          "_merkleLeavesURI": "API endpoint providing unencoded JSON array",
+          "_merkleReference": "Public name of the merkle eligibility implementation",
+          "_merkleRoot": "The root of our merkle tree",
+          "_minExpirationTime": "Minimum number of seconds until ENS expiration"
+        }
+      },
+      "__NFTXEligibility_init_bytes(bytes)": {
+        "params": {
+          "configData": "Encoded config data"
+        }
+      },
+      "finalized()": {
+        "returns": {
+          "_0": "bool"
+        }
+      },
+      "name()": {
+        "returns": {
+          "_0": "string"
+        }
+      },
+      "processToken(uint256,bytes32[])": {
+        "params": {
+          "merkleProof": "Merkle proof to validate against the tokenId",
+          "tokenId": "The ENS token ID being validated"
+        },
+        "returns": {
+          "isValid": "If the token is valid"
+        }
+      },
+      "processTokens(uint256[],bytes32[][])": {
+        "params": {
+          "merkleProofs": "Merkle proofs to validate against the corresponding tokenId",
+          "tokenIds": "The ENS token IDs being validated"
+        },
+        "returns": {
+          "_0": "bool[] If the token at the corresponding index is valid"
+        }
+      },
+      "requiresProcessing(uint256,bytes32[])": {
+        "details": "If this returns `true`, `processToken` should subsequently be run before checking the eligibility of the token. ",
+        "params": {
+          "tokenId": "The ENS domain token ID"
+        },
+        "returns": {
+          "_0": "bool If the tokenId requires precursory validation"
+        }
+      },
+      "targetAsset()": {
+        "returns": {
+          "_0": "address "
+        }
+      }
+    },
+    "title": "NFTX ENS Merkle Eligibility",
+    "version": 1
+  },
+  "userdoc": {
+    "events": {
+      "NFTXEligibilityInit(bytes32,string,string)": {
+        "notice": "Emitted when our NFTX Eligibility is deployed"
+      },
+      "PrecursoryCheckComplete(uint256,bytes32,bool)": {
+        "notice": "Emitted when a project validity check has been completed"
+      },
+      "PrecursoryCheckStarted(uint256,bytes32)": {
+        "notice": "Emitted when a project validity check is started"
+      }
+    },
+    "kind": "user",
+    "methods": {
+      "__NFTXEligibility_init(bytes32,string,string)": {
+        "notice": "Parameters here should mirror the config struct. "
+      },
+      "__NFTXEligibility_init(bytes32,string,string,uint256)": {
+        "notice": "Parameters here should mirror the config struct. "
+      },
+      "__NFTXEligibility_init_bytes(bytes)": {
+        "notice": "Allow our eligibility module to be initialised with optional config data. "
+      },
+      "finalized()": {
+        "notice": "Confirms that our module has been finalised and won't change."
+      },
+      "merkleLeavesURI()": {
+        "notice": "URI to JSON list of unencoded token IDs"
+      },
+      "merkleReference()": {
+        "notice": "Merkle reference for any required frontend differentiation"
+      },
+      "merkleRoot()": {
+        "notice": "Merkle proof to validate all eligible domains against"
+      },
+      "minExpirationTime()": {
+        "notice": "Minimum expiration time for ENS domains in seconds"
+      },
+      "name()": {
+        "notice": "The name of our Eligibility Module."
+      },
+      "processToken(uint256,bytes32[])": {
+        "notice": "This will run a precursory check by encoding the token ID, creating the token hash, and then checking this against our merkle tree."
+      },
+      "processTokens(uint256[],bytes32[][])": {
+        "notice": "This will run a number of precursory checks by encoding the token ID, creating the token hash, and then checking this against our merkle tree."
+      },
+      "requiresProcessing(uint256,bytes32[])": {
+        "notice": "Checks if the token requires a precursory validation before it can have it's eligibility determined. "
+      },
+      "targetAsset()": {
+        "notice": "The address of our token asset contract."
+      },
+      "validTokenHashes(bytes32)": {
+        "notice": "Internal storage of valid and processed tokens"
+      }
+    },
+    "notice": "Allows vaults to be allow eligibility based ENS domains, allowing for minimum expiration times to be set.",
+    "version": 1
+  },
+  "storageLayout": {
+    "storage": [
+      {
+        "astId": 17341,
+        "contract": "contracts/solidity/eligibility/NFTXENSMerkleEligibility.sol:NFTXENSMerkleEligibility",
+        "label": "_initialized",
+        "offset": 0,
+        "slot": "0",
+        "type": "t_bool"
+      },
+      {
+        "astId": 17344,
+        "contract": "contracts/solidity/eligibility/NFTXENSMerkleEligibility.sol:NFTXENSMerkleEligibility",
+        "label": "_initializing",
+        "offset": 1,
+        "slot": "0",
+        "type": "t_bool"
+      },
+      {
+        "astId": 14252,
+        "contract": "contracts/solidity/eligibility/NFTXENSMerkleEligibility.sol:NFTXENSMerkleEligibility",
+        "label": "validTokenHashes",
+        "offset": 0,
+        "slot": "1",
+        "type": "t_mapping(t_bytes32,t_bool)"
+      },
+      {
+        "astId": 14258,
+        "contract": "contracts/solidity/eligibility/NFTXENSMerkleEligibility.sol:NFTXENSMerkleEligibility",
+        "label": "_processedTokenHashes",
+        "offset": 0,
+        "slot": "2",
+        "type": "t_mapping(t_bytes32,t_mapping(t_bytes32,t_bool))"
+      },
+      {
+        "astId": 14261,
+        "contract": "contracts/solidity/eligibility/NFTXENSMerkleEligibility.sol:NFTXENSMerkleEligibility",
+        "label": "merkleRoot",
+        "offset": 0,
+        "slot": "3",
+        "type": "t_bytes32"
+      },
+      {
+        "astId": 14264,
+        "contract": "contracts/solidity/eligibility/NFTXENSMerkleEligibility.sol:NFTXENSMerkleEligibility",
+        "label": "merkleReference",
+        "offset": 0,
+        "slot": "4",
+        "type": "t_string_storage"
+      },
+      {
+        "astId": 14267,
+        "contract": "contracts/solidity/eligibility/NFTXENSMerkleEligibility.sol:NFTXENSMerkleEligibility",
+        "label": "merkleLeavesURI",
+        "offset": 0,
+        "slot": "5",
+        "type": "t_string_storage"
+      },
+      {
+        "astId": 13589,
+        "contract": "contracts/solidity/eligibility/NFTXENSMerkleEligibility.sol:NFTXENSMerkleEligibility",
+        "label": "minExpirationTime",
+        "offset": 0,
+        "slot": "6",
+        "type": "t_uint256"
+      }
+    ],
+    "types": {
+      "t_bool": {
+        "encoding": "inplace",
+        "label": "bool",
+        "numberOfBytes": "1"
+      },
+      "t_bytes32": {
+        "encoding": "inplace",
+        "label": "bytes32",
+        "numberOfBytes": "32"
+      },
+      "t_mapping(t_bytes32,t_bool)": {
+        "encoding": "mapping",
+        "key": "t_bytes32",
+        "label": "mapping(bytes32 => bool)",
+        "numberOfBytes": "32",
+        "value": "t_bool"
+      },
+      "t_mapping(t_bytes32,t_mapping(t_bytes32,t_bool))": {
+        "encoding": "mapping",
+        "key": "t_bytes32",
+        "label": "mapping(bytes32 => mapping(bytes32 => bool))",
+        "numberOfBytes": "32",
+        "value": "t_mapping(t_bytes32,t_bool)"
+      },
+      "t_string_storage": {
+        "encoding": "bytes",
+        "label": "string",
+        "numberOfBytes": "32"
+      },
+      "t_uint256": {
+        "encoding": "inplace",
+        "label": "uint256",
+        "numberOfBytes": "32"
+      }
+    }
+  }
+}
