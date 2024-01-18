@@ -17,6 +17,8 @@
     "deploy:arbitrum": "hardhat deploy --network arbitrum",
     "verify:arbitrum": "hardhat --network arbitrum etherscan-verify",
     "gen:addresses": "ts-node ./script/genAddressesJson.ts",
+    "gen:readme": "ts-node ./script/genREADME.ts",
+    "gen:addresses-and-readme": "yarn gen:addresses && yarn gen:readme",
     "unflatten": "npx @devdavi/unflatten"
   },
   "devDependencies": {
@@ -27,6 +29,7 @@
     "@typechain/ethers-v5": "^7.0.1",
     "@typechain/hardhat": "^2.1.1",
     "@types/mocha": "^8.2.2",
+    "@types/node": "^20.11.5",
     "chai": "^4.3.4",
     "dotenv": "^10.0.0",
     "ethereum-waffle": "^3.4.0",
@@ -38,8 +41,8 @@
     "hardhat-tracer": "^1.0.0-alpha.6",
     "prettier": "^2.4.1",
     "prettier-plugin-solidity": "^1.0.0-beta.18",
-    "ts-node": "^10.8.0",
+    "ts-node": "^10.9.2",
     "typechain": "^5.1.1",
-    "typescript": "^4.7.2"
+    "typescript": "^5.3.3"
   }
 }
