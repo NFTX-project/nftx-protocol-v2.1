@@ -56,6 +56,9 @@ devDependencies:
   hardhat-tracer:
     specifier: ^1.0.0-alpha.6
     version: 1.2.0(chalk@4.1.2)(ethers@5.7.2)(hardhat@2.12.4)
+  husky:
+    specifier: ^8.0.3
+    version: 8.0.3
   prettier:
     specifier: ^2.4.1
     version: 2.8.1
@@ -4642,6 +4645,12 @@ packages:
       debug: 4.3.4(supports-color@8.1.1)
     transitivePeerDependencies:
       - supports-color
+    dev: true
+
+  /husky@8.0.3:
+    resolution: {integrity: sha512-+dQSyqPh4x1hlO1swXBiNb2HzTDN1I2IGLQx1GrBuiqFJfoMrnZWwVmatvSiO+Iz8fBUnf+lekwNo4c2LlXItg==}
+    engines: {node: '>=14'}
+    hasBin: true
     dev: true
 
   /iconv-lite@0.4.24:
