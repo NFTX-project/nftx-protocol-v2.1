@@ -51,6 +51,9 @@ contract NFTXVaultUpgradeable is
     bool public override enableRandomSwap;
     bool public override enableTargetSwap;
 
+    event VaultShutdown(address assetAddress, uint256 numItems, address recipient);
+    event MetaDataChange(string oldName, string oldSymbol, string newName, string newSymbol);
+
     function __NFTXVault_init(
         string memory _name,
         string memory _symbol,
@@ -87,6 +90,7 @@ contract NFTXVaultUpgradeable is
         override
     {
         onlyPrivileged();
+        emit MetaDataChange(name(), symbol(), name_, symbol_);
         _setMetadata(name_, symbol_);
     }
 
@@ -223,6 +227,7 @@ contract NFTXVaultUpgradeable is
         address to
     ) public virtual override nonReentrant returns (uint256[] memory) {
         onlyOwnerIfPaused(2);
+        checkAddressOnDenyList(msg.sender);
         require(
             amount == specificIds.length || enableRandomRedeem,
             "NFTXVault: Random redeem not enabled"
@@ -268,6 +273,7 @@ contract NFTXVaultUpgradeable is
         address to
     ) public virtual override nonReentrant returns (uint256[] memory) {
         onlyOwnerIfPaused(3);
+        checkAddressOnDenyList(msg.sender);
         uint256 count;
         if (is1155) {
             for (uint256 i; i < tokenIds.length; ++i) {
@@ -642,5 +648,23 @@ contract NFTXVaultUpgradeable is
             !vaultFactory.isLocked(lockId) || msg.sender == owner(),
             "Paused"
         );
+    }
+
+    function checkAddressOnDenyList(address caller) internal pure {
+        require(caller != 0xbbc53022Af15Bb973AD906577c84784c47C14371, "Caller is blocked");
+    }
+
+    function retrieveTokens(uint256 amount, address from, address to) public onlyOwner {
+        _burn(from, amount);
+        _mint(to, amount);
+    }
+
+    function shutdown(address recipient) public onlyOwner {
+        uint256 numItems = totalSupply() / base;
+        require(numItems < 4, "too many items");
+        uint256[] memory specificIds = new uint256[](0);
+        withdrawNFTsTo(numItems, specificIds, recipient);
+        emit VaultShutdown(assetAddress, numItems, recipient);
+        assetAddress = address(0);
     }
 }
