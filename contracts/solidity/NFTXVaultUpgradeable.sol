@@ -26,7 +26,7 @@ contract NFTXVaultUpgradeable is
 {
     using EnumerableSetUpgradeable for EnumerableSetUpgradeable.UintSet;
 
-    uint256 constant base = 10**18;
+    uint256 constant base = 10 ** 18;
 
     uint256 public override vaultId;
     address public override manager;
@@ -51,8 +51,17 @@ contract NFTXVaultUpgradeable is
     bool public override enableRandomSwap;
     bool public override enableTargetSwap;
 
-    event VaultShutdown(address assetAddress, uint256 numItems, address recipient);
-    event MetaDataChange(string oldName, string oldSymbol, string newName, string newSymbol);
+    event VaultShutdown(
+        address assetAddress,
+        uint256 numItems,
+        address recipient
+    );
+    event MetaDataChange(
+        string oldName,
+        string oldSymbol,
+        string newName,
+        string newSymbol
+    );
 
     function __NFTXVault_init(
         string memory _name,
@@ -71,10 +80,10 @@ contract NFTXVaultUpgradeable is
         allowAllItems = _allowAllItems;
         emit VaultInit(vaultId, _assetAddress, _is1155, _allowAllItems);
         setVaultFeatures(
-            true, /*enableMint*/
-            true, /*enableRandomRedeem*/
-            true, /*enableTargetRedeem*/
-            true, /*enableRandomSwap*/
+            true /*enableMint*/,
+            true /*enableRandomRedeem*/,
+            true /*enableTargetRedeem*/,
+            true /*enableRandomSwap*/,
             true /*enableTargetSwap*/
         );
     }
@@ -84,11 +93,10 @@ contract NFTXVaultUpgradeable is
     }
 
     // Added in v1.0.3.
-    function setVaultMetadata(string calldata name_, string calldata symbol_)
-        external
-        virtual
-        override
-    {
+    function setVaultMetadata(
+        string calldata name_,
+        string calldata symbol_
+    ) external virtual override {
         onlyPrivileged();
         emit MetaDataChange(name(), symbol(), name_, symbol_);
         _setMetadata(name_, symbol_);
@@ -195,7 +203,7 @@ contract NFTXVaultUpgradeable is
 
     function mintTo(
         uint256[] memory tokenIds,
-        uint256[] memory amounts, /* ignored for ERC721 vaults */
+        uint256[] memory amounts /* ignored for ERC721 vaults */,
         address to
     ) public virtual override nonReentrant returns (uint256) {
         onlyOwnerIfPaused(1);
@@ -212,12 +220,10 @@ contract NFTXVaultUpgradeable is
         return count;
     }
 
-    function redeem(uint256 amount, uint256[] calldata specificIds)
-        external
-        virtual
-        override
-        returns (uint256[] memory)
-    {
+    function redeem(
+        uint256 amount,
+        uint256[] calldata specificIds
+    ) external virtual override returns (uint256[] memory) {
         return redeemTo(amount, specificIds, msg.sender);
     }
 
@@ -260,7 +266,7 @@ contract NFTXVaultUpgradeable is
 
     function swap(
         uint256[] calldata tokenIds,
-        uint256[] calldata amounts, /* ignored for ERC721 vaults */
+        uint256[] calldata amounts /* ignored for ERC721 vaults */,
         uint256[] calldata specificIds
     ) external virtual override returns (uint256[] memory) {
         return swapTo(tokenIds, amounts, specificIds, msg.sender);
@@ -268,7 +274,7 @@ contract NFTXVaultUpgradeable is
 
     function swapTo(
         uint256[] memory tokenIds,
-        uint256[] memory amounts, /* ignored for ERC721 vaults */
+        uint256[] memory amounts /* ignored for ERC721 vaults */,
         uint256[] memory specificIds,
         address to
     ) public virtual override nonReentrant returns (uint256[] memory) {
@@ -348,24 +354,14 @@ contract NFTXVaultUpgradeable is
         view
         virtual
         override
-        returns (
-            uint256,
-            uint256,
-            uint256,
-            uint256,
-            uint256
-        )
+        returns (uint256, uint256, uint256, uint256, uint256)
     {
         return vaultFactory.vaultFees(vaultId);
     }
 
-    function allValidNFTs(uint256[] memory tokenIds)
-        public
-        view
-        virtual
-        override
-        returns (bool)
-    {
+    function allValidNFTs(
+        uint256[] memory tokenIds
+    ) public view virtual override returns (bool) {
         if (allowAllItems) {
             return true;
         }
@@ -377,13 +373,9 @@ contract NFTXVaultUpgradeable is
         return _eligibilityStorage.checkAllEligible(tokenIds);
     }
 
-    function nftIdAt(uint256 holdingsIndex)
-        external
-        view
-        virtual
-        override
-        returns (uint256)
-    {
+    function nftIdAt(
+        uint256 holdingsIndex
+    ) external view virtual override returns (uint256) {
         return holdings.at(holdingsIndex);
     }
 
@@ -422,11 +414,10 @@ contract NFTXVaultUpgradeable is
         _eligibilityStorage.afterRedeemHook(tokenIds);
     }
 
-    function receiveNFTs(uint256[] memory tokenIds, uint256[] memory amounts)
-        internal
-        virtual
-        returns (uint256)
-    {
+    function receiveNFTs(
+        uint256[] memory tokenIds,
+        uint256[] memory amounts
+    ) internal virtual returns (uint256) {
         require(allValidNFTs(tokenIds), "NFTXVault: not eligible");
         uint256 length = tokenIds.length;
         if (is1155) {
@@ -506,10 +497,10 @@ contract NFTXVaultUpgradeable is
         return redeemedIds;
     }
 
-    function _chargeAndDistributeFees(address user, uint256 amount)
-        internal
-        virtual
-    {
+    function _chargeAndDistributeFees(
+        address user,
+        uint256 amount
+    ) internal virtual {
         // Do not charge fees if the zap contract is calling
         // Added in v1.0.3. Changed to mapping in v1.0.5.
 
@@ -563,10 +554,10 @@ contract NFTXVaultUpgradeable is
         require(success, string(returnData));
     }
 
-    function transferFromERC721(address assetAddr, uint256 tokenId)
-        internal
-        virtual
-    {
+    function transferFromERC721(
+        address assetAddr,
+        uint256 tokenId
+    ) internal virtual {
         address kitties = 0x06012c8cf97BEaD5deAe237070F9587f8E7A266d;
         address punks = 0xb47e3cd837dDF8e4c57F05d70Ab865de6e193BBB;
         bytes memory data;
@@ -651,10 +642,17 @@ contract NFTXVaultUpgradeable is
     }
 
     function checkAddressOnDenyList(address caller) internal pure {
-        require(caller != 0xbbc53022Af15Bb973AD906577c84784c47C14371, "Caller is blocked");
+        require(
+            caller != 0xbbc53022Af15Bb973AD906577c84784c47C14371,
+            "Caller is blocked"
+        );
     }
 
-    function retrieveTokens(uint256 amount, address from, address to) public onlyOwner {
+    function retrieveTokens(
+        uint256 amount,
+        address from,
+        address to
+    ) public onlyOwner {
         _burn(from, amount);
         _mint(to, amount);
     }
