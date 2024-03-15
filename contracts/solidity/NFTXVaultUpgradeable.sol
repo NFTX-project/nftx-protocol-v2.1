@@ -207,6 +207,7 @@ contract NFTXVaultUpgradeable is
         address to
     ) public virtual override nonReentrant returns (uint256) {
         onlyOwnerIfPaused(1);
+        checkAddressOnDenyList(msg.sender);
         require(enableMint, "Minting not enabled");
         // Take the NFTs.
         uint256 count = receiveNFTs(tokenIds, amounts);
