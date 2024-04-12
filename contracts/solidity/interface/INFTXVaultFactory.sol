@@ -12,6 +12,8 @@ interface INFTXVaultFactory is IBeacon {
 
     function zapContracts(address addr) external view returns (bool);
 
+    function erc1272Signer() external view returns (address);
+
     function feeDistributor() external view returns (address);
 
     function eligibilityManager() external view returns (address);
@@ -117,4 +119,6 @@ interface INFTXVaultFactory is IBeacon {
     ) external;
 
     function disableVaultFees(uint256 vaultId) external;
+
+    function setERC1271Signer(address _erc1271Signer) external;
 }
