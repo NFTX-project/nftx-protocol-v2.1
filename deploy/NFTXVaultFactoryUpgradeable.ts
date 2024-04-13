@@ -41,36 +41,36 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
     }
   );
 
-  // modify factory fees
-  await execute(
-    "NFTXVaultFactoryUpgradeable",
-    { from: deployer },
-    "setFactoryFees",
-    "100000000000000000",
-    "40000000000000000",
-    "60000000000000000",
-    "40000000000000000",
-    "100000000000000000"
-  );
+  // // modify factory fees
+  // await execute(
+  //   "NFTXVaultFactoryUpgradeable",
+  //   { from: deployer },
+  //   "setFactoryFees",
+  //   "100000000000000000",
+  //   "40000000000000000",
+  //   "60000000000000000",
+  //   "40000000000000000",
+  //   "100000000000000000"
+  // );
 
-  // set deployed address in other contracts
-  await execute(
-    "NFTXLPStaking",
-    { from: deployer },
-    "setNFTXVaultFactory",
-    NFTXVaultFactoryUpgradeable.address
-  );
-  await execute(
-    "NFTXSimpleFeeDistributor",
-    { from: deployer },
-    "setNFTXVaultFactory",
-    NFTXVaultFactoryUpgradeable.address
-  );
+  // // set deployed address in other contracts
+  // await execute(
+  //   "NFTXLPStaking",
+  //   { from: deployer },
+  //   "setNFTXVaultFactory",
+  //   NFTXVaultFactoryUpgradeable.address
+  // );
+  // await execute(
+  //   "NFTXSimpleFeeDistributor",
+  //   { from: deployer },
+  //   "setNFTXVaultFactory",
+  //   NFTXVaultFactoryUpgradeable.address
+  // );
 };
 export default func;
 func.tags = ["NFTXVaultFactoryUpgradeable"];
 func.dependencies = [
-  "NFTXSimpleFeeDistributor",
-  "NFTXLPStaking",
-  "MultiProxyController",
+  // "NFTXSimpleFeeDistributor",
+  // "NFTXLPStaking",
+  // "MultiProxyController",
 ];

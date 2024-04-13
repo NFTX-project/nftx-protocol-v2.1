@@ -1,4 +1,22 @@
 {
+  "sepolia": {
+    "MultiProxyController": "0x4f566a711901168804A74F252680d85C9246188e",
+    "NFTXEligibilityManager": "0xa1ad09f8Fd789E3A940Ba9Dc5aE4D17021eF290D",
+    "NFTXInventoryStaking": "0x2724f135e00a1078BC003D093D94Cc3718F6F591",
+    "NFTXLPStaking": "0xcA523fBAf06a157F3D96735b6fC0626323a65BAa",
+    "NFTXMarketplace0xZap": "",
+    "NFTXSimpleFeeDistributor": "0x68A7F493F6C40556931559afD22D7eD868d3f78E",
+    "NFTXStakingZap": "0x1678c88B66f989accBccF20E1EaF65e75AAf4434",
+    "NFTXUnstakingInventoryZap": "0x10dDb79e6612694365cd3004777e7541040F6182",
+    "NFTXVaultCreationZap": "0x66f26E38bD50FD52A50da8E87E435f04f98001B7",
+    "NFTXVaultFactoryUpgradeable": "0xE77b89FEc41A7b7dC74eb33602e82F0672FbB33C",
+    "StakingTokenProvider": "0x5B3004375CD6770C466377acF4dD2382dB9fa41d",
+    "sushiRouter": "0xEa8D67a95E1172718CbD601F0742B2ba4E45bC7C",
+    "swapTarget": "0x000000000000000000000000000000000000dEaD",
+    "TimelockExcludeList": "0x57c8Aa1b15229C677d309B52715F3d8442a59cD6",
+    "uniLikeExchange": "0xbb4B7cf5a75cc2Ac66A03FAC97Af67E8c364B4Cd",
+    "WETH": "0xfFf9976782d46CC05630D1f6eBAb18b2324d6B14"
+  },
   "arbitrum": {
     "MultiProxyController": "0x732E5F7FE7c40333DfeFF57755666F85d1e164c1",
     "NFTXEligibilityManager": "",
@@ -34,24 +52,6 @@
     "TimelockExcludeList": "",
     "uniLikeExchange": "0xC0AEe478e3658e2610c5F7A4A2E1777cE9e4f2Ac",
     "WETH": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
-  },
-  "sepolia": {
-    "MultiProxyController": "0x4f566a711901168804A74F252680d85C9246188e",
-    "NFTXEligibilityManager": "0xa1ad09f8Fd789E3A940Ba9Dc5aE4D17021eF290D",
-    "NFTXInventoryStaking": "0x2724f135e00a1078BC003D093D94Cc3718F6F591",
-    "NFTXLPStaking": "0xcA523fBAf06a157F3D96735b6fC0626323a65BAa",
-    "NFTXMarketplace0xZap": "",
-    "NFTXSimpleFeeDistributor": "0x68A7F493F6C40556931559afD22D7eD868d3f78E",
-    "NFTXStakingZap": "0x1678c88B66f989accBccF20E1EaF65e75AAf4434",
-    "NFTXUnstakingInventoryZap": "0x10dDb79e6612694365cd3004777e7541040F6182",
-    "NFTXVaultCreationZap": "0x66f26E38bD50FD52A50da8E87E435f04f98001B7",
-    "NFTXVaultFactoryUpgradeable": "0xE77b89FEc41A7b7dC74eb33602e82F0672FbB33C",
-    "StakingTokenProvider": "0x5B3004375CD6770C466377acF4dD2382dB9fa41d",
-    "sushiRouter": "0xEa8D67a95E1172718CbD601F0742B2ba4E45bC7C",
-    "swapTarget": "0x000000000000000000000000000000000000dEaD",
-    "TimelockExcludeList": "0x57c8Aa1b15229C677d309B52715F3d8442a59cD6",
-    "uniLikeExchange": "0xbb4B7cf5a75cc2Ac66A03FAC97Af67E8c364B4Cd",
-    "WETH": "0xfFf9976782d46CC05630D1f6eBAb18b2324d6B14"
   },
   "goerli": {
     "MultiProxyController": "0x70B139bFA4C91d9A13F6D7c7B949a62A6Fbd7488",

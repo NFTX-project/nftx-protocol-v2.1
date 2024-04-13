@@ -48,6 +48,8 @@ contract NFTXVaultFactoryUpgradeable is
     // v1.0.3
     mapping(address => bool) public override zapContracts;
 
+    address public override erc1272Signer;
+
     function __NFTXVaultFactory_init(
         address _vaultImpl,
         address _feeDistributor
@@ -199,6 +201,10 @@ contract NFTXVaultFactoryUpgradeable is
     {
         emit NewEligibilityManager(eligibilityManager, _eligibilityManager);
         eligibilityManager = _eligibilityManager;
+    }
+
+    function setERC1271Signer(address _erc1271Signer) external override onlyOwner {
+        erc1272Signer = _erc1271Signer;
     }
 
     function vaultFees(uint256 vaultId)

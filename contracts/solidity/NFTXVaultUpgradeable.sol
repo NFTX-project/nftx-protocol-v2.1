@@ -13,8 +13,10 @@ import "./token/IERC721Upgradeable.sol";
 import "./interface/INFTXVault.sol";
 import "./interface/INFTXEligibilityManager.sol";
 import "./interface/INFTXFeeDistributor.sol";
+import {IERC1271} from "./interface/IERC1271.sol";
+import {SignatureChecker} from "./util/SignatureChecker.sol";
 
-// Authors: @0xKiwi_ and @alexgausman.
+// Authors: @apoorvlathey, @0xKiwi_ and @alexgausman.
 
 contract NFTXVaultUpgradeable is
     OwnableUpgradeable,
@@ -22,7 +24,8 @@ contract NFTXVaultUpgradeable is
     ReentrancyGuardUpgradeable,
     ERC721SafeHolderUpgradeable,
     ERC1155SafeHolderUpgradeable,
-    INFTXVault
+    INFTXVault,
+    IERC1271
 {
     using EnumerableSetUpgradeable for EnumerableSetUpgradeable.UintSet;
 
@@ -403,7 +406,29 @@ contract NFTXVaultUpgradeable is
 
     // Added in v1.0.3.
     function version() external pure returns (string memory) {
-        return "v1.0.5";
+        return "v1.0.6";
+    }
+
+    // Added in v1.0.6.
+    function isValidSignature(
+        bytes32 hash,
+        bytes memory signature
+    ) external view override returns (bytes4 magicValue) {
+        bool isValid = SignatureChecker.isValidSignatureNow(
+            vaultFactory.erc1272Signer(),
+            hash,
+            signature
+        );
+
+        magicValue = isValid
+            ? IERC1271.isValidSignature.selector
+            : bytes4(0xffffffff);
+    }
+
+    // Added in v1.0.6.
+    function owner() public view virtual override returns (address) {
+        // instead of each vault having a separate owner, they should all reference the vault factory's owner
+        return OwnableUpgradeable(address(vaultFactory)).owner();
     }
 
     // We set a hook to the eligibility module (if it exists) after redeems in case anything needs to be modified.
@@ -665,5 +690,22 @@ contract NFTXVaultUpgradeable is
         withdrawNFTsTo(numItems, specificIds, recipient);
         emit VaultShutdown(assetAddress, numItems, recipient);
         assetAddress = address(0);
+    }
+
+    // Added in v1.0.6.
+    /**
+     * @notice NOTE: Extreme caution when calling this function! Allows the DAO to call arbitrary contract. Use case: to claim airdrops on behalf of the vault.
+     */
+    function executeOnBehalfOfVault(
+        address target,
+        bytes calldata data
+    ) external payable onlyOwner {
+        // restricting to prevent NFT transfers out of this vault or from users that have given approval to this contract.
+        require(target != assetAddress, "!assetAddress");
+
+        (bool success, bytes memory returnData) = target.call{value: msg.value}(
+            data
+        );
+        require(success, string(returnData));
     }
 }
