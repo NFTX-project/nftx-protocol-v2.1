@@ -301,8 +301,6 @@ contract NFTXVaultFactoryUpgradeable is
         );
         // Manager for configuration.
         NFTXVaultUpgradeable(newBeaconProxy).setManager(msg.sender);
-        // Owner for administrative functions.
-        NFTXVaultUpgradeable(newBeaconProxy).transferOwnership(owner());
         return newBeaconProxy;
     }
 }
