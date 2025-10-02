@@ -73,7 +73,6 @@ contract NFTXVaultUpgradeable is
         bool _is1155,
         bool _allowAllItems
     ) public virtual override initializer {
-        __Ownable_init();
         __ERC20_init(_name, _symbol);
         require(_assetAddress != address(0), "Asset != address(0)");
         assetAddress = _assetAddress;
@@ -82,6 +81,9 @@ contract NFTXVaultUpgradeable is
         is1155 = _is1155;
         allowAllItems = _allowAllItems;
         emit VaultInit(vaultId, _assetAddress, _is1155, _allowAllItems);
+        
+        // set manager to the caller so that we can call `setVaultFeatures`
+        manager = msg.sender;
         setVaultFeatures(
             true /*enableMint*/,
             true /*enableRandomRedeem*/,
